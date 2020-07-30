@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+</head>
+<body>
+    <div id="myDiv">
+        {{text}}
+    </div>
+    <ul id="myUL">
+        <li v-for="item in array">
+            {{item.text}}
+        </li>
+    </ul>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/vue.js"></script>
+
+    <script>
+        $(function () {
+
+            var vw = new Vue({
+                el:"#myDiv",
+                data: {
+                    text:"值"
+                }
+            });
+            var ul = new Vue({
+                el: "#myUL",
+                data: {
+                    array:[
+                        { text: '112233' },
+                        { text: '2131' },
+                        { text: '1241241' }
+                    ]
+                }
+            })
+        })
+    </script>
+</body>
+</html>

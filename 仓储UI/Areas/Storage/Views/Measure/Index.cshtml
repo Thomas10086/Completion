@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<i class="layui-icon layui-icon-home"></i><a href="/Home/Index">首页</a>
+
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <input name="MeasureName" class="layui-input" placeholder="请输入单位编号或名称">
+        </div>
+        <button type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
+    </div>
+</div>
+
+<div id="main" style="margin:0 auto;">
+    <div class="table">
+        <table id="demo" lay-filter="test"></table>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/html" id="barDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="update">编辑</button>
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete">删除</button>
+        </div>
+    </script>
+    <script>
+        $(function () {
+            Loading();
+            $("#btnSearch").click(function () {
+                Loading();
+            })
+        })
+        function Loading() {
+            var table = layui.table;
+            var tableurl = "/api/MeasureAPI/MeasureList";
+            var MeasureName = $("[name='MeasureName']").val();
+            table.render({
+                title: "计量单位"
+                , elem: '#demo'
+                , id: "MyTable"
+                //, height: 770
+                , url: tableurl //数据接口
+                , where: { MeasureName: MeasureName }
+                , page: true //开启分页
+                , limit: 10
+                , limits: [5, 10, 15, 20]
+                , toolbar: true
+                , cols: [[ //表头
+                    { field: 'MeasureNum', title: '单位编号',  sort: true, fixed: 'left' }
+                    , { field: 'MeasureName', title: '单位名称' }
+                    , { title: '操作', fixed: 'right', align: 'center', toolbar: '#barDemo' }
+                ]]
+            });//动态表格
+
+            table.on('toolbar(test)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id),
+                    data = checkStatus.data;
+                data = eval("(" + JSON.stringify(data) + ")");
+                switch (obj.event) {
+                    case 'add':
+                        layer.open({
+                            type: 2,
+                            title: "新增计量单位",
+                            area: ['20%', '20%'],
+                            maxmin: true,
+                            //shadeClose: true,
+                            shade: 0.4,
+                            skin: 'layui-layer-rim',
+                            content: "/Storage/Measure/Add",
+                            btn: ['保存', '关闭'],
+                            closeBtn: 1,
+                            yes: function (index, layero) {
+                                var divv = layer.getChildFrame('body', index);
+                                var info = {
+                                    LocalName: divv.find("input[name=LocalName]").val(),
+                                    LocalTypeID: divv.find("select[name=LocalTypeList]").val(),
+                                    StorageNum: divv.find("select[name='StorageList']").val(),
+                                    IsDefault: divv.find("select[name='IsDefault']").val()
+                                }
+                                $.ajax({
+                                    url: "/api/LocationAPI/Add",
+                                    data: info,
+                                    type: "post",
+                                    success: function (data) {
+                                        if (data == true) {
+                                            layer.msg("新增成功！");
+                                            layer.close(index);
+                                        }
+                                    }, error: function (xhr) {
+                                        layer.msg("出错：" + xhr.responseText);
+                                    }
+                                })
+                            },
+                            end: function () {
+                                table.reload("MyTable");
+                                //parent.layui.table.reload('partnerslist');    
+                            }
+                        });
+                        break;
+                }
+            });//新增库位
+
+            //监听工具条 
+            table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+                if (layEvent == 'detail') { //查看
+                    //do somehing
+                } else if (layEvent == 'delete') { //删除
+                    layer.confirm('真的删除行么', function (index) {
+                        var id = obj.data.LocalNum;
+                        //obj.del(); 删除对应行（tr）的DOM结构，并更新缓存
+                        layer.close(index);
+                        //向服务端发送删除指令
+                        $.ajax({
+                            url: '/api/LocationAPI/del/' + id,
+                            type: 'post',
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg("删除成功！");
+                                    table.reload("MyTable");
+                                }
+                            },
+                            error: function (xhr) {
+                                layer.msg("出错：" + xhr.responseText);
+                            }
+                        });//ajax删除
+                    });
+                } else if (layEvent == 'update') { //编辑
+                    //do something
+                    layer.msg("修改！");
+                    //同步更新缓存对应的值
+                    var id = obj.data.LocalNum;
+                    layer.open({
+                        type: 2,
+                        title: "编辑库位",
+                        area: ['50%', '50%'],
+                        maxmin: true,
+                        shade: 0.4,
+                        skin: 'layui-layer-rim',
+                        content: "/Storage/Location/Upd/" + id,
+                        btn: ['保存', '取消'],
+                        closeBtn: 1,
+                        yes: function (index, layero) {
+                            var divv = layer.getChildFrame('body', index);
+                            var info = {
+                                LocalNum: divv.find("input[name=LocalNum]").val(),
+                                LocalName: divv.find("input[name=LocalName]").val(),
+                                LocalTypeID: divv.find("select[name=LocalTypeList]").val(),
+                                StorageNum: divv.find("select[name='StorageList']").val(),
+                                IsDefault: divv.find("select[name='IsDefault']").val()
+                            }
+                            $.ajax({
+                                url: "/api/LocationAPI/Upd",
+                                data: info,
+                                type: "post",
+                                success: function (data) {
+                                    if (data == true) {
+                                        layer.msg("修改成功！");
+                                        layer.close(index);
+                                    }
+                                }, error: function (xhr) {
+                                    layer.msg("出错：" + xhr.responseText);
+                                }
+                            })
+                        },
+                        end: function () {
+                            table.reload("MyTable");
+                            //parent.layui.table.reload('partnerslist');    
+                        }
+                    });
+                } else if (layEvent === 'LAYTABLE_TIPS') {
+                    layer.alert('Hi，头部工具栏扩展的右侧图标。');
+                }
+            });
+
+        };//加载方法
+    </script>
+
+}
+
+

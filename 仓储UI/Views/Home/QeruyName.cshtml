@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "QeruyName";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>用户名<input type="text"  id="userName"/></p>
+<button type="button" id="cx">查询</button>
+<div id="content">
+    <table id="ss">
+        
+    </table>
+</div>
+<script src="~/Content/layui/lay/jquery-1.10.2.min.js"></script>
+@section scripts{
+    <script>
+        $(function () {
+            $("#cx").click(function () {
+                var info = {
+                    UserName: $("#userName").val()
+                };
+                alert(info.UserName);
+                $.get("/Home/QeruyNames", info, function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var sss = $("<tr>" +
+                            "<td>" + data[i].UserName + "</td>" +
+                            "<td>" + data[i].RoleNum + "</td>" +
+                            "<td>" + data[i].PassWord + "</td>" +
+                            "<td>" + data[i].RoleName + "</td>" +
+                            "<td>" + data[i].DepartName + "</td>" +
+                            "<td>" + data[i].LoginCount + "</td>" +
+                            "<td>" + data[i].IsDelete + "</td>" +
+                            "<td>" + data[i].Email + "</td>" +
+                            "<td>" + data[i].Phone + "</td>" +
+                            "<td>" + data[i].ZName + "</td>" +
+                            "</tr>");
+                        $("#ss").append(sss);
+                    }
+                })
+            })
+        })
+    </script>
+}
+

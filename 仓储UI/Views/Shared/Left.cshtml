@@ -1,0 +1,19 @@
+﻿@using 仓储Model
+@model List<SysResource>
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+        @foreach (var item in Model)
+        {
+            <li class="layui-nav-item ">
+                <a class="" href="javascript:;">@item.ResName</a>
+                <dl class="layui-nav-child">
+                    @foreach (var i in item.SysResource1)
+                    {
+                        <dd><a href="@i.Url">@i.ResName</a></dd>
+                    }
+                </dl>
+            </li>
+        }
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;"><i class="layui-icon layui-icon-username"></i> 退出系统</a>
+            </li>
+    </ul>

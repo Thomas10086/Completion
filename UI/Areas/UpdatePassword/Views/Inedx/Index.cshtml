@@ -1,0 +1,13 @@
+﻿<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+<p>当前密码<input type="password" /></p>
+<p>密码<input type="password" /></p>
+<p>确然密码<input type="password" /></p>
+<p><button type="submit">登录</button></p>
+<script src="~/Content/layui/layui.js"></script>
+<script>
+    layer.open({
+        title: '修改密码',
+        type: 1,
+        content: ['/Login/UpdatePassword', 'no'],
+    });
+</script>

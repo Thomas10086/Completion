@@ -1,0 +1,46 @@
+﻿
+<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+
+<div>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">库位编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title" disabled lay-verify="required" placeholder="自动生成，可不填" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">库位名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="LocalName" required lay-verify="required" placeholder="请输入库位名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">库位条码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">库位类型</label>
+                <div class="layui-input-inline">
+                    @Html.DropDownList("LocalTypeList")
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">仓库</label>
+                <div class="layui-input-inline">
+                    @Html.DropDownList("StorageList")
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否默认</label>
+                <div class="layui-input-inline">
+                    @Html.DropDownList("IsDefault")
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Content/layui/layui.all.js"></script>

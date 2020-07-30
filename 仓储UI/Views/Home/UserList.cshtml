@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "QueryAllAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using 仓储Model
+@model List<Admin>
+<h2>我是员工管理</h2>
+@*<table>*@
+    @*@foreach (var i in Model)
+        {
+        <tr>
+            <td>@i.UserName</td>
+            <td>@i.ZName</td>
+            <td>@i.PassWord</td>
+            <td>@i.Email</td>
+            <td>@i.Phone</td>
+            <td>@i.LoginCount</td>
+            <td>@i.SysRole.RoleName</td>
+            <td>@i.SysDepart.DepartName</td>
+            <td>删除</td>
+            <td>修改</td>
+        </tr>
+        }*@
+@*</table>*@
+<table id="demo" lay-filter="test"></table>
+@section scripts{
+
+    <script>
+        $(function () {
+                var table = layui.table;
+
+                table.render({
+                    elem: '#demo'
+                    , height: 770
+                    , url: '/Home/QueryAllAdmins/' //数据接口
+                    , page: true //开启分页
+                    , limit: 3
+                    , limits: [3, 5, 10]
+                    , toolbar: true
+                    , cols: [[ //表头
+                        { field: 'UserName', title: '用户名', width: 150, sort: true, fixed: 'left' }
+                        , { field: 'UserCode', title: '用户名', width: 150 }
+                        , { field: 'ZName', title: '用户名', width: 150 }
+                        , { field: 'Email', title: '用户名', width: 150 }
+                        , { field: 'Phone', title: '用户名', width: 150 }
+                        , { field: 'Remark', title: '用户名', width: 150 }
+                        , { field: 'RoleName', title: '用户名', width: 150 }
+                        , { field: 'DepartName', title: '用户名', width: 150 }
+                        , { field: 'IsDelete', title: '用户名', width: 150 }
+                        , { field: 'LoginCount', title: '用户名', width: 150 }
+            ]]
+            });
+        })
+    </script>
+}
+
+
+

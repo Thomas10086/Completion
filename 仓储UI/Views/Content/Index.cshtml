@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table id="demo" lay-filter="test"></table>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            var table = layui.table;
+
+            table.render({
+                elem: '#demo'
+                , height: 770
+                , url: '/Content/QLeft/' //数据接口
+                , page: true //开启分页
+                , limit: 3
+                , limit: [3, 5, 10]
+                , toolbar: true
+                , cols: [[ //表头
+                    { field: 'ResName', title: '用户名', width: 80, sort: true, fixed: 'left' }
+                    , { field: 'ResName', title: '用户名', width: 80 }
+            @*, { field: 'sex', title: '性别', width: 80, sort: true } *@
+            @*, { field: 'city', title: '城市', width: 80 } *@
+            @*, { field: 'sign', title: '签*@@*名', width: 177 }
+                , { field: 'experience', title: '积分', width: 80, sort: true }
+                , { field: 'score', title: '评分', width: 80, sort: true }
+                , { field: 'classify', title: '职业', width: 80 }
+                , { field: 'wealth', title: '财富', width: 135, sort: true } *@
+            ]]
+        });
+    })
+    </script>
+}

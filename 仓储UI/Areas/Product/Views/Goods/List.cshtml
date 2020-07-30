@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<i class="layui-icon layui-icon-home"></i><a href="/Home/Index">首页</a>
+
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <input name="CateName" class="layui-input" placeholder="请输入类别编号或名称">
+        </div>
+        <button type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
+    </div>
+</div>
+
+<div id="main" style="margin:0 auto;">
+    <div class="table">
+        <table id="demo" lay-filter="test"></table>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/html" id="barDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="update">编辑</button>
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete">删除</button>
+        </div>
+    </script>
+    <script>
+        $(function () {
+            Loading();
+            $("#btnSearch").click(function () {
+                Loading();
+            })
+        })
+        function Loading() {
+            var table = layui.table;
+            var tableurl = "/api/GoodsAPI/ProductCategoryList";
+            var CateName = $("[name='CateName']").val();
+            table.render({
+                title: "产品类别管理"
+                , elem: '#demo'
+                , id: "MyTable"
+                //, height: 770
+                , url: tableurl //数据接口
+                , where: { CateName: CateName }
+                , page: true //开启分页
+                , limit: 10
+                , limits: [5, 10, 15, 20]
+                , toolbar: true
+                , cols: [[ //表头
+                    { field: 'CateNum', title: '类别编号',  sort: true, fixed: 'left' }
+                    , { field: 'CateName', title: '类别名称' }
+                    , { field: 'UserName', title: '创建人' }
+                    , { field: 'CreateTime', title: '创建时间' }
+                    , { field: 'Remark', title: '备注' }
+                    , { title: '操作', fixed: 'right', align: 'center', toolbar: '#barDemo' }
+                ]]
+            });//动态表格
+        }
+    </script>
+
+}
