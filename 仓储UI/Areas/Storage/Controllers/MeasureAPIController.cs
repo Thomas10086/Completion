@@ -33,6 +33,22 @@ namespace 仓储UI.Areas.Storage.Controllers
             });
             return Json(new {code=0,count=total,data=MeasureList });
         }
-
+        [HttpPost]
+        public IHttpActionResult Add(BI_Measure info)
+        {
+            string info1 = db.BI_Measure.ToList().OrderBy(x => x.MeasureNum).LastOrDefault().MeasureNum;
+            info.MeasureNum = info1.Substring(0, 4) + (Convert.ToInt32(info1.Substring(4, 2)) + 1).ToString();
+            db.BI_Measure.Add(info);
+            var bl = db.SaveChanges() > 0;
+            return Json(bl);
+        }
+        [HttpPost]
+        public IHttpActionResult del(string id)
+        {
+            db.BI_Measure.Remove(db.BI_Measure.Find(id));
+            var bl = db.SaveChanges() > 0;
+            return Json(bl);
+        }
+        
     }
 }

@@ -1,24 +1,44 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "StockBillReport";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <i class="layui-icon layui-icon-home"></i><a href="/Home/Index">首页</a>
 
-<div class="layui-form-item">
-    <div class="layui-inline">
-        <div class="layui-input-inline">
-            <input name="MeasureName" class="layui-input" placeholder="请输入单位编号或名称">
+<form class="layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">库位</label>
+            <div class="layui-input-inline">
+                <input name="LocalName" class="layui-input">
+            </div>
         </div>
-        <button type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
+        <div class="layui-inline">
+            <label class="layui-form-label">产品</label>
+            <div class="layui-input-inline">
+                <input name="ProductName" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">库位类型</label>
+            <div class="layui-input-inline">
+                @Html.DropDownList("LocalTypeList")
+            </div>
+        </div>
     </div>
-</div>
-
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
+        </div>
+    </div>
+</form>
 <div id="main" style="margin:0 auto;">
     <div class="table">
         <table id="demo" lay-filter="test"></table>
     </div>
 </div>
+
 
 @section scripts{
     <script type="text/html" id="barDemo">
@@ -27,36 +47,44 @@
             <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete">删除</button>
         </div>
     </script>
-    <script type="text/html" id="complain_toolbar">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
-        </div>
-    </script>
+
     <script>
         $(function () {
             Loading();
             $("#btnSearch").click(function () {
                 Loading();
             })
-        })
+
+
+
+        })//页面加载
+
+
+
         function Loading() {
             var table = layui.table;
-            var tableurl = "/api/MeasureAPI/MeasureList";
-            var MeasureName = $("[name='MeasureName']").val();
+            var tableurl = "/api/LocationAPI/LocationList";
+            var LocalName = $("[name='LocalName']").val();
+            var LocalTypeID = $("[name='LocalTypeList']").val();
+            var ProductName = $("[name='ProductName']").val();
             table.render({
-                title: "计量单位"
-                , elem: '#demo'
+                elem: '#demo'
                 , id: "MyTable"
                 //, height: 770
                 , url: tableurl //数据接口
-                , where: { MeasureName: MeasureName }
+                , where: { LocalName: LocalName, LocalTypeID: LocalTypeID, ProductName: ProductName }
                 , page: true //开启分页
-                , limit: 10
-                , limits: [5, 10, 15, 20]
-                , toolbar: '#complain_toolbar'
+                , limit: 5
+                , limits: [5, 10, 15, 20, 30, 50]
+                , toolbar: true 
+                , defaultToolbar: "['exports']"
                 , cols: [[ //表头
-                    { field: 'MeasureNum', title: '单位编号', sort: true, fixed: 'left' }
-                    , { field: 'MeasureName', title: '单位名称' }
+                    { field: 'LocalNum', title: '库位编号', sort: true, fixed: 'left' }
+                    , { field: 'LocalName', title: '库位名称'}
+                    , { field: 'StorageName', title: '仓库名称' }
+                    , { field: 'LocalTypeName', title: '库位类型' }
+                    , { field: 'IsDefault', title: '是否默认' }
+                    , { field: 'CreateTime', title: '创建时间' }
                     , { title: '操作', fixed: 'right', align: 'center', toolbar: '#barDemo' }
                 ]]
             });//动态表格
@@ -69,24 +97,26 @@
                     case 'add':
                         layer.open({
                             type: 2,
-                            title: "新增计量单位",
-                            area: ['35%', '35%'],
+                            title: "添加库位",
+                            area: ['50%', '50%'],
                             maxmin: true,
                             //shadeClose: true,
                             shade: 0.4,
                             skin: 'layui-layer-rim',
-                            content: "/Storage/Measure/Add",
-                            btn: ['保存', '关闭'],
+                            content: "/Storage/Location/Add",
+                            btn: ['保存','取消'],
                             closeBtn: 1,
                             yes: function (index, layero) {
                                 var divv = layer.getChildFrame('body', index);
                                 var info = {
-                                    MeasureName: divv.find("input[name=MeasureName]").val(),
-                                    MeasureNum: divv.find("select[name=MeasureNum]").val()
+                                    LocalName: divv.find("input[name=LocalName]").val(),
+                                    LocalTypeID: divv.find("select[name=LocalTypeList]").val(),
+                                    StorageNum: divv.find("select[name='StorageList']").val(),
+                                    IsDefault: divv.find("select[name='IsDefault']").val()
                                 }
                                 $.ajax({
-                                    url: "/api/MeasureAPI/Add",
-                                    data: info,
+                                    url: "/api/LocationAPI/Add",
+                                    data:info,
                                     type: "post",
                                     success: function (data) {
                                         if (data == true) {
@@ -117,12 +147,12 @@
                     //do somehing
                 } else if (layEvent == 'delete') { //删除
                     layer.confirm('真的删除行么', function (index) {
-                        var id = obj.data.MeasureNum;
+                        var id = obj.data.LocalNum;
                         //obj.del(); 删除对应行（tr）的DOM结构，并更新缓存
                         layer.close(index);
                         //向服务端发送删除指令
                         $.ajax({
-                            url: '/api/MeasureAPI/del/' + id,
+                            url: '/api/LocationAPI/del/' + id,
                             type: 'post',
                             success: function (data) {
                                 if (data == true) {
@@ -139,25 +169,28 @@
                     //do something
                     layer.msg("修改！");
                     //同步更新缓存对应的值
-                    var id = obj.data.MeasureNum;
+                    var id = obj.data.LocalNum;
                     layer.open({
                         type: 2,
                         title: "编辑库位",
-                        area: ['35%', '35%'],
+                        area: ['50%', '50%'],
                         maxmin: true,
                         shade: 0.4,
                         skin: 'layui-layer-rim',
-                        content: "/Storage/Measure/Upd/" + id,
+                        content: "/Storage/Location/Upd/" + id,
                         btn: ['保存', '取消'],
                         closeBtn: 1,
                         yes: function (index, layero) {
                             var divv = layer.getChildFrame('body', index);
                             var info = {
-                                MeasureName: divv.find("input[name=MeasureName]").val(),
-                                MeasureNum: divv.find("select[name=MeasureNum]").val()
+                                LocalNum: divv.find("input[name=LocalNum]").val(),
+                                LocalName: divv.find("input[name=LocalName]").val(),
+                                LocalTypeID: divv.find("select[name=LocalTypeList]").val(),
+                                StorageNum: divv.find("select[name='StorageList']").val(),
+                                IsDefault: divv.find("select[name='IsDefault']").val()
                             }
                             $.ajax({
-                                url: "/api/MeasureAPI/Upd",
+                                url: "/api/LocationAPI/Upd",
                                 data: info,
                                 type: "post",
                                 success: function (data) {
@@ -180,9 +213,10 @@
                 }
             });
 
-        };//加载方法
+        }//加载方法
+
+
     </script>
 
 }
-
 

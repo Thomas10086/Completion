@@ -50,7 +50,7 @@
     <script type="text/html" id="complain_toolbar">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" lay-event="add" ><i class="layui-icon layui-icon-addition"></i>添加</button>
-        </div>
+        </div>                     
     </script>
     <script>
         $(function () {
@@ -91,7 +91,7 @@
                     , { title: '操作', fixed: 'right', align: 'center', toolbar: '#barDemo' }
                 ]]
             });//动态表格
-
+            //添加按钮
             table.on('toolbar(test)', function (obj) {
                 var checkStatus = table.checkStatus(obj.config.id),
                     data = checkStatus.data;
@@ -190,7 +190,8 @@
                                 LocalName: divv.find("input[name=LocalName]").val(),
                                 LocalTypeID: divv.find("select[name=LocalTypeList]").val(),
                                 StorageNum: divv.find("select[name='StorageList']").val(),
-                                IsDefault: divv.find("select[name='IsDefault']").val()
+                                IsDefault: divv.find("select[name='IsDefault']").val(),
+                                IsForbid:'否'
                             }
                             $.ajax({
                                 url: "/api/LocationAPI/Upd",

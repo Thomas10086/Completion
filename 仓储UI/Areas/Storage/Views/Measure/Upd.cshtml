@@ -1,0 +1,23 @@
+﻿<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+
+@using 仓储Model
+@model BI_Measure
+
+
+<div>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="MeasureNum" disabled lay-verify="required" value="@Model.MeasureNum" autocomplete="off" class="layui-input">
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="MeasureName" required lay-verify="required" value="@Model.MeasureName" placeholder="请输入计量单位名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </form>
+</div>

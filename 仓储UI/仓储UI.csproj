@@ -576,7 +576,6 @@
     <Folder Include="Areas\Product\Views\Shared\" />
     <Folder Include="Areas\Report\Data\" />
     <Folder Include="Areas\Report\Views\Manager\" />
-    <Folder Include="Areas\Report\Views\Report\" />
     <Folder Include="Areas\Report\Views\Shared\" />
     <Folder Include="Areas\Returns\Data\" />
     <Folder Include="Areas\Returns\Views\Product\" />
@@ -643,6 +642,10 @@
     <Content Include="obj\Release\仓储UI.csprojAssemblyReference.cache" />
     <Content Include="Areas\Storage\Views\Location\Upd.cshtml" />
     <Content Include="Areas\Storage\Views\Measure\Add.cshtml" />
+    <Content Include="Areas\Storage\Views\Measure\Upd.cshtml" />
+    <Content Include="Areas\Client\Views\Supplier\Add.cshtml" />
+    <Content Include="Areas\Client\Views\Supplier\Upd.cshtml" />
+    <Content Include="Areas\Report\Views\Report\StockBillReport.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Test\Test.cshtml" />
   </ItemGroup>

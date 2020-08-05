@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using 仓储BLL;
 using 仓储Model;
 
 namespace 仓储UI.Areas.Client.Controllers
@@ -15,6 +16,7 @@ namespace 仓储UI.Areas.Client.Controllers
         public IHttpActionResult SupplierList(int page, int limit, string SupName)
         {
             var list = from x in db.BI_Supplier
+                       where x.IsDelete==0
                        select new
                        {
                            x.SupNum,
@@ -48,6 +50,33 @@ namespace 仓储UI.Areas.Client.Controllers
             return Json(new { code = 0, count = total, data = list1 });
         }
 
-       
+        [HttpPost]
+        public IHttpActionResult Add(BI_Supplier info)
+        {
+            string info1 = db.BI_Supplier.ToList().OrderBy(x => x.CreateTime).LastOrDefault().SupNum;
+
+            info.SupNum = info1.Substring(0, 4) + (Convert.ToInt32(info1.Substring(4, 2)) + 1).ToString();
+            info.CreateTime = DateTime.Now;
+            info.IsDelete = 0;
+            var bl = new BI_SupplierManager().Add(info);
+            return Json(bl);
+        }
+
+        [HttpPost]
+        public IHttpActionResult del(string id)
+        {
+            db.BI_Supplier.Find(id).IsDelete = 1;
+            var bl = db.SaveChanges() > 0;
+            return Json(bl);
+        }
+
+        [HttpPost]
+        public IHttpActionResult Upd(BI_Supplier info)
+        {
+            info.IsDelete = 0;
+            info.CreateTime = db.BI_Supplier.Find(info.SupNum).CreateTime;
+            var bl = new BI_SupplierManager().Update(info);
+            return Json(bl);
+        }
     }
 }

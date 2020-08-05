@@ -71,6 +71,143 @@
                     , { title: '操作', fixed: 'right', align: 'center', toolbar: '#barDemo' }
                 ]]
             });//动态表格
+
+            //添加按钮
+            table.on('toolbar(test)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id),
+                    data = checkStatus.data;
+                data = eval("(" + JSON.stringify(data) + ")");
+                switch (obj.event) {
+                    case 'add':
+                        layer.open({
+                            type: 2,
+                            title: "新增客户",
+                            area: ['50%', '60%'],
+                            maxmin: true,
+                            //shadeClose: true,
+                            shade: 0.4,
+                            skin: 'layui-layer-rim',
+                            content: "/Client/Customer/Add",
+                            btn: ['新增地址','确认', '取消'],
+                            closeBtn: 1,
+                            btn1: function (index, layero) {
+                                layer.msg("新增地址！")
+                            },
+                            yes: function (index, layero) {
+                                var divv = layer.getChildFrame('body', index);
+                                var info = {
+                                    SupNum: divv.find("input[name=SupNum]").val(),
+                                    SupName: divv.find("input[name=SupName]").val(),
+                                    SupTypeID: divv.find("select[name='SupTypeList']").val(),
+                                    Phone: divv.find("input[name='Phone']").val(),
+                                    Fax: divv.find("input[name=Fax]").val(),
+                                    Email: divv.find("input[name=Email]").val(),
+                                    ContactName: divv.find("input[name='ContactName']").val(),
+                                    Address: divv.find("input[name='Address']").val(),
+                                    Description: divv.find("input[name='Description']").val()
+                                }
+                                $.ajax({
+                                    url: "/api/SupplierAPI/Add",
+                                    data: info,
+                                    type: "post",
+                                    success: function (data) {
+                                        if (data == true) {
+                                            layer.msg("新增成功！");
+                                            layer.close(index);
+                                        }
+                                    }, error: function (xhr) {
+                                        layer.msg("出错：" + xhr.responseText);
+                                    }
+                                })
+                            },
+                            end: function () {
+                                table.reload("MyTable");
+                                //parent.layui.table.reload('partnerslist');    
+                            }
+                        });
+                        break;
+                }
+            });//新增库位
+
+            //监听工具条 
+            table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+                if (layEvent == 'detail') { //查看
+                    //do somehing
+                } else if (layEvent == 'delete') { //删除
+                    layer.confirm('真的删除行么', function (index) {
+                        var id = obj.data.SupNum;
+                        //obj.del(); 删除对应行（tr）的DOM结构，并更新缓存
+                        layer.close(index);
+                        //向服务端发送删除指令
+                        $.ajax({
+                            url: '/api/SupplierAPI/del/' + id,
+                            type: 'post',
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg("删除成功！");
+                                    table.reload("MyTable");
+                                }
+                            },
+                            error: function (xhr) {
+                                layer.msg("出错：" + xhr.responseText);
+                            }
+                        });//ajax删除
+                    });
+                } else if (layEvent == 'update') { //编辑
+                    //do something
+                    //同步更新缓存对应的值
+                    var id = obj.data.SupNum;
+                    layer.open({
+                        type: 2,
+                        title: "编辑库位",
+                        area: ['50%', '60%'],
+                        maxmin: true,
+                        shade: 0.4,
+                        skin: 'layui-layer-rim',
+                        content: "/Client/Supplier/Upd/" + id,
+                        btn: ['保存', '取消'],
+                        closeBtn: 1,
+                        yes: function (index, layero) {
+                            var divv = layer.getChildFrame('body', index);
+                            var info = {
+                                SupNum: divv.find("input[name=SupNum]").val(),
+                                SupName: divv.find("input[name=SupName]").val(),
+                                SupTypeID: divv.find("select[name='SupTypeList']").val(),
+                                Phone: divv.find("input[name='Phone']").val(),
+                                Fax: divv.find("input[name=Fax]").val(),
+                                Email: divv.find("input[name=Email]").val(),
+                                ContactName: divv.find("input[name='ContactName']").val(),
+                                Address: divv.find("input[name='Address']").val(),
+                                Description: divv.find("input[name='Description']").val()
+                            }
+                            $.ajax({
+                                url: "/api/SupplierAPI/Upd",
+                                data: info,
+                                type: "post",
+                                success: function (data) {
+                                    if (data == true) {
+                                        layer.msg("修改成功！");
+                                        layer.close(index);
+                                    }
+                                }, error: function (xhr) {
+                                    layer.msg("出错：" + xhr.responseText);
+                                }
+                            })
+                        },
+                        end: function () {
+                            table.reload("MyTable");
+                            //parent.layui.table.reload('partnerslist');    
+                        }
+                    });
+                } else if (layEvent === 'LAYTABLE_TIPS') {
+                    layer.alert('Hi，头部工具栏扩展的右侧图标。');
+                }
+            });
+
         }
     </script>
 

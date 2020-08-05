@@ -64,7 +64,6 @@ namespace 仓储UI.Areas.Storage.Controllers
         public IHttpActionResult Add(BI_Location info)
         {
             string info1 = db.BI_Location.ToList().OrderBy(x=>x.CreateTime).LastOrDefault().LocalNum;
-            
             string localNum = info1.Substring(0,8)+(Convert.ToInt32(info1.Substring(6,3)) + 1).ToString();
             info.CreateTime = DateTime.Now;
             info.LocalNum = localNum;

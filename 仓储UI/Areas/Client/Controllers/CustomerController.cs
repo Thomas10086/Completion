@@ -13,7 +13,18 @@ namespace 仓储UI.Areas.Client.Controllers
         /// 客户管理
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public ActionResult Index()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Add()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult upd(String id)
         {
             return View();
         }

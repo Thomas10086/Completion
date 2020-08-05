@@ -1,0 +1,58 @@
+﻿
+<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+
+<div>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">供应商编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="SupNum" disabled lay-verify="required" placeholder="自动生成，可不填" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">供应商名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="SupName" required lay-verify="required" placeholder="请输入供应商名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">传真</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Fax" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">Email</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Email" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Phone" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">联系人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="ContactName" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Address" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Description" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">供应商类型</label>
+                <div class="layui-input-inline">
+                    @Html.DropDownList("SupTypeList")
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Content/layui/layui.all.js"></script>

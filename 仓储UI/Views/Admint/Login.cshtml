@@ -11,9 +11,29 @@
     <meta name="viewport" content="width=device-width" />
     <title>Login</title>
     @Html.Partial("LayUICSS")
+    <style>
+        #body{
+            width:500px;
+            margin:0px auto;
+            border:0px solid red;
+        }
+        h1 {
+            margin-left: 120px;
+        }
+        button{
+            margin-left:160px;
+        }
+    </style>
 </head>
 <body>
-    <div>
+    <div id="body">
+
+        <br />
+        <br />
+        <h1>仓储管理系统</h1>
+        <br />
+        <br />
+        <br />
         <form class="layui-form" action="/Admint/Login" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">账号：</label>
