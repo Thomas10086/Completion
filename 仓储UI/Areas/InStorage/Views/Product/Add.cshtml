@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using 仓储Model
+@model Admin
+    <form class="layui-form" action="" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">入库单编码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="StoINum" disabled placeholder="自动生成编号" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">关联订单号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="OrderNum" required lay-verify="required" placeholder="请输入关联订单号" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">制单人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="UserCode" required lay-verify="required" placeholder="请输入制作人" autocomplete="off" class="layui-input">
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">供应商编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="SupNum" required lay-verify="required" placeholder="请输入供应商编号" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">供应商名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="SupName" required lay-verify="required" placeholder="请输入供应商名称" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">供应商联系人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Phone" required lay-verify="required" placeholder="请输入供应商联系人" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-inline">
+            <input type="text" name="ZName" required lay-verify="required" placeholder="请输入备注" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">日期</label>
+        <div class="layui-inline">
+            <input type="text" class="layui-input" id="test1">
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">入库类型</label>
+            <div class="layui-input-inline">
+                @Html.DropDownList("StoITypeNum")
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="*">保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+@section scripts{
+    <script>
+        $(function () {
+            layui.use('laydate', function () {
+                var laydate = layui.laydate;
+
+                laydate.render({
+                    elem: '#test1'
+                });
+            });
+        })
+        function load() {
+
+        }
+    </script>
+    }
+

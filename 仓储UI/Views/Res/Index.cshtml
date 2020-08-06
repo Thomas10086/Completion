@@ -1,18 +1,15 @@
 ﻿
 @{
-    ViewBag.Title = "QueryAllAdmin";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section styles{
-}
 <form class="layui-form" action="" method="post">
-
     <div class="layui-form-item">
-        <label class="layui-form-label">用户名编码</label>
+        <label class="layui-form-label">菜单编号</label>
         <div class="layui-input-inline">
-            <input type="text" name="title" lay-verify="required" placeholder="请输入用户编号或用户名" autocomplete="off" class="layui-input" id="userName">
+            <input type="text" name="ResNum" required placeholder="请输入菜单编号" autocomplete="off" class="layui-input">
         </div>
-        <button type="button" class="layui-btn" onclick="loca()">查询</button>
+        <button type="button" class="layui-btn" onclick="load()">查询</button>
     </div>
 </form>
 <table id="demo" lay-filter="test"></table>
@@ -30,15 +27,13 @@
     </script>
     <script>
         $(function () {
-            loca();
-          
-            /*新增*/
+            load();
             $("#btnAdd").click(function () {
                 var layer = layui.layer;
                 layer.open({
                     type: 2,
-                    content: "/Home/Add",
-                    area: ['50%', '50%'],
+                    content: "/Res/Add",
+                    area: ['26%', '45%'],
                     btn: ['保存', '关闭'],
                     closeBtn: 1,
                     yes: function (index, layero) {
@@ -49,13 +44,6 @@
                         var info = {
                             UserCode: body.find('input[name=UserCode]').val(),
                             UserName: body.find("input[name=UserName]").val(),
-                            Password: body.find("input[name=PassWord]").val(),
-                            Password1: body.find("input[name=PassWord1]").val(),
-                            Email: body.find("input[name=Email]").val(),
-                            Phone: body.find("input[name=Phone]").val(),
-                            ZName: body.find("input[name=ZName]").val(),
-                            RoleNum: body.find("select[name=RoleNum]").val(),
-                            DepartNum: body.find("select[name=DepartNum]").val(),
 
                         }
                         if (info.Password != info.Password1) {
@@ -64,7 +52,7 @@
                         }
                         $.ajax({
                             type: "post",
-                            url: "/Home/Add",
+                            url: "/Res/Add",
                             data: info,
                             success: function (data) {
                                 if (data == true) {
@@ -85,38 +73,30 @@
                     }
                 });
             });
-        });
-
-        /**加载 */
-        function loca() {
-
+        })
+        function load() {
             var table = layui.table;
-            var UserName = $("#userName").val();
+            var ResNum = $("[name=ResNum]").val();
             table.render({
                 elem: '#demo'
-                , id: "mytables"
-                , url: '/Home/UserLists' //数据接口
+                , id:'mytables'
+                , url: '/Res/Indexs' //数据接口
                 , page: true //开启分页
-                , where: { UserName: UserName }
                 , limit: 3
                 , limits: [3, 5, 10]
-                , offset: 'auto'
                 , toolbar: '#complain_toolbar'
+                , where: { ResNum: ResNum }
                 , cols: [[ //表头
-                    { field: 'UserName', title: '用户名', sort: true, fixed: 'left' }
-                    , { field: 'UserCode', title: '用户编号' }
-                    , { field: 'ZName', title: '真名' }
-                    , { field: 'Email', title: '邮箱' }
-                    , { field: 'Phone', title: '电话' }
-                    , { field: 'Remark', title: '备注' }
-                    , { field: 'RoleName', title: '角色名称' }
-                    , { field: 'DepartName', title: '部门名称' }
+                    { field: 'ResNum', title: '菜单编号', width: 120, sort: true, fixed: 'left' }
+                    , { field: 'ResName', title: '菜单名称' }
+                    , { field: 'ParentNum', title: '父级菜单' }
+                    , { field: 'Url', title: '路径' }
+                    , { field: 'CreateTime', title: '创建时间' }
                     , { field: 'IsDelete', title: '是否注销' }
-                    , { field: 'LoginCount', title: '登录次数' }
+                    , { field: 'Remark', title: '备注' }
                     , { title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right' }
                 ]]
             });
-            /*删除*/
             table.on('tool(test)', function (obj) {
                 //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
                 var data = obj.data; //获得当前行数据
@@ -127,10 +107,10 @@
                     //do somehing
                 } else if (layEvent == 'delete') { //删除
                     layer.confirm('真的删除行么', function (index) {
-                        var id = obj.data.UserCode;
+                        var id = obj.data.ResNum;
                         layer.close(index);
                         $.ajax({
-                            url: '/Delete/AdmintDelet/' + id,
+                            url: '/Delete/SysResourceDelet/' + id,
                             type: 'post',
                             success: function (data) {
                                 if (data == true) {
@@ -145,10 +125,10 @@
                     });
                     /*修改*/
                 } else if (layEvent == 'update') {
-                    var id = obj.data.UserCode;
+                    var id = obj.data.ResNum;
                     layer.open({
                         type: 2,
-                        content: "/Update/UpdateAdmin/" + id,
+                        content: "/Update/UpdateSysResource/" + id,
                         area: ['800px', '400px'],
                         btn: ['保存', '关闭'],
                         closeBtn: 1,
@@ -158,22 +138,14 @@
                             //find方法是获得当前元素的所有子孙元素 会一直往下找
                             //但是可以设定选择器（jquery选择器）
                             var info = {
-                                UserCode: body.find('input[name=UserCode]').val(),
-                                UserName: body.find("input[name=UserName]").val(),
-                                Email: body.find("input[name=Email]").val(),
-                                Phone: body.find("input[name=Phone]").val(),
-                                ZName: body.find("input[name=ZName]").val(),
-                                RoleNum: body.find("select[name=RoleNum]").val(),
-                                DepartNum: body.find("select[name=DepartNum]").val(),
-
-                            }
-                            if (info.Password != info.Password1) {
-                                layer.msg('两次密码不一致', { icon: 5 });
-                                return;
+                                ResNum: body.find('input[name=ResNum]').val(),
+                                ResName: body.find("input[name=ResName]").val(),
+                                Url: body.find("input[name=Url]").val(),
+                                Remark: body.find("input[name=Remark]").val(),
                             }
                             $.ajax({
                                 type: "post",
-                                url: "/Update/UpdateAdmin",
+                                url: "/Update/UpdateSysResource",
                                 data: info,
                                 success: function (data) {
                                     if (data == true) {
@@ -198,9 +170,6 @@
                 }
             });
         }
-
     </script>
 }
-
-
 

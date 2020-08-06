@@ -4,86 +4,93 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<i class="layui-icon layui-icon-home"></i><a href="/Home/Index">首页</a>
+    <div class="layui-inline">
+        <i class="layui-icon layui-icon-home"></i><a href="/Home/Index">首页</a>
+        --
+        <div class="layui-input-inline">
+            <i class="layui-icon layui-icon-website"></i>库存清单报表
+        </div>
+     </div>
 
-<form class="layui-form">
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">库位</label>
-            <div class="layui-input-inline">
-                <input name="LocalName" class="layui-input">
+        <form class="layui-form">
+            <br />
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">库位</label>
+                    <div class="layui-input-inline">
+                        <input name="LocalName" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">产品</label>
+                    <div class="layui-input-inline">
+                        <input name="ProductName" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">库位类型</label>
+                    <div class="layui-input-inline">
+                        @Html.DropDownList("LocalTypeList")
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
+                </div>
+            </div>
+        </form>
+        <div id="main" style="margin:0 auto;">
+            <div class="table">
+                <table id="demo" lay-filter="test"></table>
             </div>
         </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">产品</label>
-            <div class="layui-input-inline">
-                <input name="ProductName" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">库位类型</label>
-            <div class="layui-input-inline">
-                @Html.DropDownList("LocalTypeList")
-            </div>
-        </div>
-        <div class="layui-inline">
-            <button type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
-        </div>
-    </div>
-</form>
-<div id="main" style="margin:0 auto;">
-    <div class="table">
-        <table id="demo" lay-filter="test"></table>
-    </div>
-</div>
 
 
-@section scripts{
+        @section scripts{
 
-    <script>
-        $(function () {
-            Loading();
-            $("#btnSearch").click(function () {
-                Loading();
-            })
+            <script>
+                $(function () {
+                    Loading();
+                    $("#btnSearch").click(function () {
+                        Loading();
+                    })
 
-        })//页面加载
+                })//页面加载
 
-        function Loading() {
-            var table = layui.table;
-            var tableurl = "/api/ReportAPI/ReportList";
-            var LocalName = $("[name='LocalName']").val();
-            var LocalTypeID = $("[name='LocalTypeList']").val();
-            var ProductName = $("[name='ProductName']").val();
-            table.render({
-                elem: '#demo'
-                , id: "MyTable"
-                //, height: 770
-                , url: tableurl //数据接口
-                , where: { LocalName: LocalName, LocalTypeID: LocalTypeID, ProductName: ProductName }
-                , page: true //开启分页
-                , limit: 10
-                , limits: [5, 10, 15, 20, 30, 50]
-                , toolbar: true 
-                , totalRow: true    
-                , cols: [[ //表头
-                    { field: 'LocalName', title: '库位', sort: true, fixed: 'left'}
-                    , { field: 'LocalTypeName', title: '库位类型'}
-                    , { field: 'SnNum', title: '产品编号' }
-                    , { field: 'BarCode', title: '产品条码' }
-                    , { field: 'ProductName', title: '产品名称' }
-                    , { field: 'CateName', title: '类别' }
-                    , { field: 'Size', title: '规格' }
-                    , { field: 'MaxNum', title: '预警值下限' }
-                    , { field: 'MinNum', title: '预警值上限', totalRowText: '合计：'}
-                    , { field: 'Num', title: '库存数', totalRow: true}
-                ]]
-            });//动态表格
-           
-        }//加载方法
+                function Loading() {
+                    var table = layui.table;
+                    var tableurl = "/api/ReportAPI/ReportList";
+                    var LocalName = $("[name='LocalName']").val();
+                    var LocalTypeID = $("[name='LocalTypeList']").val();
+                    var ProductName = $("[name='ProductName']").val();
+                    table.render({
+                        elem: '#demo'
+                        , id: "MyTable"
+                        //, height: 770
+                        , url: tableurl //数据接口
+                        , where: { LocalName: LocalName, LocalTypeID: LocalTypeID, ProductName: ProductName }
+                        , page: true //开启分页
+                        , limit: 10
+                        , limits: [5, 10, 15, 20, 30, 50]
+                        , toolbar: true
+                        , totalRow: true
+                        , cols: [[ //表头
+                            { field: 'LocalName', title: '库位', sort: true, fixed: 'left' }
+                            , { field: 'LocalTypeName', title: '库位类型' }
+                            , { field: 'SnNum', title: '产品编号' }
+                            , { field: 'BarCode', title: '产品条码' }
+                            , { field: 'ProductName', title: '产品名称' }
+                            , { field: 'CateName', title: '类别' }
+                            , { field: 'Size', title: '规格' }
+                            , { field: 'MaxNum', title: '预警值下限' }
+                            , { field: 'MinNum', title: '预警值上限', totalRowText: '合计：' }
+                            , { field: 'Num', title: '库存数', totalRow: true }
+                        ]]
+                    });//动态表格
+
+                }//加载方法
 
 
-    </script>
+            </script>
 
-}
+        }
 

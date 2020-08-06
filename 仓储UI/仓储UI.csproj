@@ -172,13 +172,17 @@
     <Compile Include="Controllers\AdmintController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
+    <Compile Include="Controllers\DeleteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ResController.cs" />
+    <Compile Include="Controllers\SysDeparController.cs" />
     <Compile Include="Controllers\SysRelationController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\SysRoleController.cs" />
+    <Compile Include="Controllers\UpdateController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminModelel.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="obj\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -557,21 +561,16 @@
     <Folder Include="Areas\Admin\Views\AddAdmin\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Bad\Data\" />
-    <Folder Include="Areas\Bad\Views\Product\" />
     <Folder Include="Areas\Bad\Views\Shared\" />
     <Folder Include="Areas\Check\Data\" />
-    <Folder Include="Areas\Check\Views\Product\" />
     <Folder Include="Areas\Check\Views\Shared\" />
     <Folder Include="Areas\Client\Data\" />
     <Folder Include="Areas\Client\Views\Shared\" />
     <Folder Include="Areas\InStorage\Data\" />
-    <Folder Include="Areas\InStorage\Views\Product\" />
     <Folder Include="Areas\InStorage\Views\Shared\" />
     <Folder Include="Areas\Move\Data\" />
-    <Folder Include="Areas\Move\Views\Product\" />
     <Folder Include="Areas\Move\Views\Shared\" />
     <Folder Include="Areas\OutStorage\Data\" />
-    <Folder Include="Areas\OutStorage\Views\Product\" />
     <Folder Include="Areas\OutStorage\Views\Shared\" />
     <Folder Include="Areas\Product\Data\" />
     <Folder Include="Areas\Product\Views\Shared\" />
@@ -588,7 +587,7 @@
     <Folder Include="obj\Release\TempPE\" />
     <Folder Include="obj\Release\TransformWebConfig\transformed\Areas\Admin\Views\" />
     <Folder Include="obj\Release\TransformWebConfig\transformed\Views\" />
-    <Folder Include="Views\Res\" />
+    <Folder Include="Views\Delete\" />
     <Folder Include="Views\SysRelation\" />
   </ItemGroup>
   <ItemGroup>
@@ -647,8 +646,27 @@
     <Content Include="Areas\Client\Views\Supplier\Add.cshtml" />
     <Content Include="Areas\Client\Views\Supplier\Upd.cshtml" />
     <Content Include="Areas\Report\Views\Report\StockBillReport.cshtml" />
+    <Content Include="Areas\InStorage\Views\Product\Add.cshtml" />
+    <Content Include="Areas\InStorage\Views\Product\List.cshtml" />
+    <Content Include="Areas\Move\Views\Product\List.cshtml" />
+    <Content Include="Areas\OutStorage\Views\Product\List.cshtml" />
+    <Content Include="Areas\Check\Views\Product\List.cshtml" />
+    <Content Include="Areas\Bad\Views\Product\List.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Test\Test.cshtml" />
+    <Content Include="Views\Res\Add.cshtml" />
+    <Content Include="Views\Res\Index.cshtml" />
+    <Content Include="Views\Res\Power.cshtml" />
+    <Content Include="Views\Res\ShowIndex.cshtml" />
+    <Content Include="Views\SysDepar\Add.cshtml" />
+    <Content Include="Views\SysRole\Add.cshtml" />
+    <Content Include="Views\Update\UpdateAdmin.cshtml" />
+    <Content Include="Views\Update\UpdateSysDepar.cshtml" />
+    <Content Include="Views\Update\UpdateSysResource.cshtml" />
+    <Content Include="Views\Update\UpdateSysRole.cshtml" />
+    <Content Include="Views\Home\Add.cshtml" />
+    <Content Include="Views\Home\DepartList.cshtml" />
+    <Content Include="Views\Home\RoleList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\仓储BLL\仓储BLL.csproj">

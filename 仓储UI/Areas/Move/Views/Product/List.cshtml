@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this" onclick="loca()">所有</li>
+        <li class="layui-this" onclick="loca()">待审核</li>
+        <li class="layui-this" onclick="loca()">审核通过</li>
+        <li class="layui-this" onclick="loca()">审核未通过</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-form-item">
+                <label class="layui-form-label">移库单号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" id="stoInum">
+                </div>
+                <button type="button" class="layui-btn" onclick="loca()">查询</button>
+            </div>
+            <table id="demo" lay-filter="test"></table>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">入库单号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" id="stoInum">
+                    </div>
+                    <button type="button" class="layui-btn" onclick="loca()">查询</button>
+                </div>
+                <table id="demo" lay-filter="test"></table>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">入库单号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" id="stoInum">
+                    </div>
+                    <button type="button" class="layui-btn" onclick="loca()">查询</button>
+                </div>
+                <table id="demo" lay-filter="test"></table>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">入库单号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" id="stoInum">
+                    </div>
+                    <button type="button" class="layui-btn" onclick="loca()">查询</button>
+                </div>
+                <table id="demo" lay-filter="test"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="update">编写</button>
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete">删除</button>
+    </div>
+</script>
+<script type="text/html" id="complain_toolbar">
+    <div class="layui-but-container">
+        <button class="layui-btn layui-btn-sm" type="submit" lay-event="add" id="btnAdd"><a href="Add">添加</a><i class="layui-icon layui-icon-addition"></i></button>
+    </div>
+</script>
+<script src="~/Content/layui/lay/jquery-1.10.2.min.js"></script>
+<script>
+    $(function () {
+        loca();
+    })
+    function loca() {
+
+        var table = layui.table;
+        var MovNum = $("#movnum").val();
+
+        table.render({
+            elem: '#demo'
+            , id: "mytables"
+            , url: '/Move/Product/Lists' //数据接口
+            , page: true //开启分页
+            , where: { MovNum: MovNum }
+            , limit: 3
+            , limits: [3, 5, 10]
+            , toolbar: '#complain_toolbar'
+            , cols: [[ //表头
+                { field: 'BreNum', title: '用户名', width: 150, sort: true, fixed: 'left' }
+                , { field: 'CreateTime', title: '用户编号' }
+                , { field: 'BreTypeName', title: '真名' }
+                , { field: 'SSName', title: '邮箱' }
+                , { field: 'OrderNum', title: '电话' }
+                , { field: 'UserName', title: '备注' }
+                , { field: 'Remark', title: '角色名称' }
+                , { title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right' }
+            ]]
+        });
+    }
+
+</script>
+
+
+

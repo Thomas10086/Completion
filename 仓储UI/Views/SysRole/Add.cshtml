@@ -1,0 +1,29 @@
+﻿@using 仓储Model
+@model Admin
+<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+<br />
+<form class="layui-form" action="" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label"  style="margin-left:40px">角色编号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="RoleNum" disabled placeholder="自动生成编号" autocomplete="off" class="layui-input ">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"style="margin-left:40px">角色名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="RoleName" required lay-verify="required" placeholder="请输入用户" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"style="margin-left:40px">备注</label>
+        <div class="layui-input-inline">
+            <input type="text" name="Remark" required lay-verify="required" placeholder="请输入用户" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+</form>
+<script>
+    $(function () {
+    });
+</script>

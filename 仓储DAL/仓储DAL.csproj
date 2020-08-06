@@ -56,6 +56,8 @@
     <Compile Include="SysRelationService.cs" />
     <Compile Include="SysResourceService.cs" />
     <Compile Include="SysRoleService.cs" />
+    <Compile Include="WJ_StockInService.cs" />
+    <Compile Include="WJ_StockInTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\仓储Model\仓储Model.csproj">

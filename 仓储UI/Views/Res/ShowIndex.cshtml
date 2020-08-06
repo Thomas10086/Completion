@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "ShowIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="list">查看个人权限：@Html.DropDownList("UserCode")</div>
+<div id="text"></div>
+@section scripts{
+    <script>
+        $(function () {
+            load();
+        })
+        function load() {
+            var info = {
+                
+            }
+            $.ajax({
+                url: '/Res/Show',
+                data: info,
+                success: function (res) {
+                    transfer.render({
+                        elem: '#text'
+                        , title: ["未拥有权限", "已拥有权限"]
+                        , data: res.SysResourceList
+                        , value: res.SysRelatiolist
+                        , id: 'text' //定义索引
+                        , onchange: function (data, index) {//data传过去的集合,index为0向右传，1为想坐传
+                            //新增权限0
+                            if (index == 0) {
+                                var array = [];
+                                for (var i = 0; i < data.length; i++) {
+                                    var sm = {
+                                        UserCode: $("UserCode").val(),
+                                        ResNum: data[i].value
+                                    };
+                                    array.push(sm);
+                                }
+                                var Addinfo = {
+                                    sjs: array
+                                };
+
+                                $.ajax({
+                                    url: "/Res/SysRelationAdd",
+                                    type: "post",
+                                    data: JSON.stringify(Addinfo),
+                                    contentType: "application/json",
+                                    success: function (date) {
+                                    }
+                                });
+
+                            } else if (index == 1) {
+
+                                var array = [];
+                                for (var i = 0; i < data.length; i++) {
+                                    var sm = {
+                                        UserCode: $("UserCode").val(),
+                                        ResNum: data[i].value
+                                    };
+                                    array.push(sm);
+                                }
+                                var Addinfo = {
+                                    sjs: array
+                                };
+
+                                $.ajax({
+                                    url: "/SysRelationDel/Del",
+                                    type: "post",
+                                    data: JSON.stringify(Addinfo),
+                                    contentType: "application/json",
+                                    success: function (date) {
+                                    }
+                                });
+
+
+                            }
+
+                        }
+                        , text: {
+                            none: '无数据' //没有数据时的文案
+                        }
+                    });
+                }
+            })
+        };
+      
+    </script>
+}
+

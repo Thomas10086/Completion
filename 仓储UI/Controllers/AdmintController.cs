@@ -15,7 +15,8 @@ namespace 仓储UI.Controllers
 
         [HttpGet]
         public ActionResult Login() {
-            return View();
+                Session.Clear();
+                return View();
         }
         [HttpPost]
         public ActionResult Login(AdmitModel s)

@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "RoleList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    }
+<form class="layui-form" action="" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title"  lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input" id="userName">
+        </div>
+        <button type="button" class="layui-btn" onclick="load()">查询</button>
+    </div>
+</form>
+<table id="demo" lay-filter="test"></table>
+@section scripts{
+    <script type="text/html" id="barDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="update">编写</button>
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete">删除</button>
+        </div>
+    </script>
+    <script type="text/html" id="complain_toolbar">
+        <div class="layui-but-container">
+            <button class="layui-btn layui-btn-sm" type="submit" lay-event="add" id="btnAdd">添加<i class="layui-icon layui-icon-addition"></i></button>
+        </div>
+    </script>
+    <script>
+        $(function () {
+            load();
+            $("#btnAdd").click(function () {
+                var layer = layui.layer;
+                layer.open({
+                    type: 2,
+                    content: "/SysRole/Add",
+                    area: ['24%', '30%'],
+                    btn: ['保存', '关闭'],
+                    closeBtn: 1,
+                    yes: function (index, layero) {
+                        var body = layer.getChildFrame('body', index);
+                        //获取当前弹出框页面body标签下的input标签val
+                        //find方法是获得当前元素的所有子孙元素 会一直往下找
+                        //但是可以设定选择器（jquery选择器）
+                        var info = {
+                            RoleNum: body.find('input[name=RoleNum]').val(),
+                            RoleName: body.find("input[name=RoleName]").val(),
+                            Remark: body.find("input[name=Remark]").val()
+                        }
+                        $.ajax({
+                            type: "post",
+                            url: "/SysRole/Add",
+                            data: info,
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg("新增成功");
+                                    layer.close(index);
+                                }
+                                else {
+                                    layer.msg("新增失败");
+                                }
+                            },
+                            error: function (xhr) {
+                                layer.msg("错误:" + xhr.responseText);
+                            }
+                        });
+                    },
+                    end: function () {
+                        table.reload("mytables");
+                    }
+                });
+            });
+
+            function load() {
+                var table = layui.table;
+                var RoleName = $("#userName").val();
+
+                table.render({
+                    elem: '#demo'
+                    , id: 'mytables'
+                    , url: '/Home/RoleLists' //数据接口
+                    , page: true //开启分页
+                    , limit: 3
+                    , limits: [3, 5, 10]
+                    , toolbar: '#complain_toolbar'
+                    , where: { RoleName: RoleName }
+                    , cols: [[ //表头
+                        { field: 'RoleNum', title: '角色编号', width: 150, sort: true, fixed: 'left' }
+                        , { field: 'RoleName', title: '角色名' }
+                        , { field: 'CreateTime', title: '创建时间' }
+                        , { field: 'IsDelete', title: '是否注销' }
+                        , { field: 'Remark', title: '备注' }
+                        , { title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right' }
+                    ]]
+                });
+                table.on('tool(test)', function (obj) {
+                    //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                    var data = obj.data; //获得当前行数据
+                    var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                    var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+                    if (layEvent == 'detail') { //查看
+                        //do somehing
+                    } else if (layEvent == 'delete') { //删除
+                        layer.confirm('真的删除行么', function (index) {
+                            var id = obj.data.RoleNum;
+                            layer.close(index);
+                            $.ajax({
+                                url: '/Delete/SysRoleDelet/' + id,
+                                type: 'post',
+                                success: function (data) {
+                                    if (data == true) {
+                                        layer.msg("删除成功！");
+                                        table.reload("mytables");
+                                    }
+                                },
+                                error: function (xx) {
+                                    layer.msg("报错:" + xx.responseText);
+                                }
+                            })
+                        });
+                        /*修改*/
+                    } else if (layEvent == 'update') {
+                        var id = obj.data.RoleNum;
+                        layer.open({
+                            type: 2,
+                            content: "/Update/UpdateSysRole/" + id,
+                            area: ['800px', '400px'],
+                            btn: ['保存', '关闭'],
+                            closeBtn: 1,
+                            yes: function (index, layero) {
+                                var body = layer.getChildFrame('body', index);
+                                //获取当前弹出框页面body标签下的input标签val
+                                //find方法是获得当前元素的所有子孙元素 会一直往下找
+                                //但是可以设定选择器（jquery选择器）
+                                var info = {
+                                    RoleNum: body.find('input[name=RoleNum]').val(),
+                                    RoleName: body.find("input[name=RoleName]").val(),
+                                    Remark: body.find("input[name=Remark]").val()
+
+                                }
+                                $.ajax({
+                                    type: "post",
+                                    url: "/Update/UpdateSysRole",
+                                    data: info,
+                                    success: function (data) {
+                                        if (data == true) {
+                                            layer.msg("修改成功");
+                                            layer.close(index);
+                                        }
+                                        else {
+                                            layer.msg("修改失败");
+                                        }
+                                    },
+                                    error: function (xhr) {
+                                        layer.msg("错误:" + xhr.responseText);
+                                    }
+                                });
+                            },
+                            end: function () {
+                                table.reload("mytables");
+                            }
+                        });
+                    } else if (layEvent == 'LAYTABLE_TIPS') {
+                        layer.alert('Hi，头部工具栏扩展的右侧图标。');
+                    }
+                });
+            }
+        })
+    </script>
+}
+

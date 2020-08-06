@@ -1,0 +1,33 @@
+﻿@using 仓储Model
+@model SysResource
+<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+<form class="layui-form" action="" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单编号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="ResNum" placeholder="自动生成菜单编号！" autocomplete="off" class="layui-input" value="@Model.ResNum">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="ResName" required lay-verify="required" placeholder="请输入角色名" autocomplete="off" class="layui-input" value="@Model.ResName">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">路径</label>
+        <div class="layui-input-inline">
+            <input type="text" name="Url" required lay-verify="required" placeholder="请输入路径" autocomplete="off" class="layui-input" value="@Model.Url">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-inline">
+            <input type="text" name="Remark" required lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" value="@Model.Remark">
+        </div>
+    </div>
+</form>
+<script>
+    $(function () {
+    });
+</script>

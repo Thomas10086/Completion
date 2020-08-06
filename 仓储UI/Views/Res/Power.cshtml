@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Power";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form class="layui-form" action="" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">查询权限：</label>
+        <div class="layui-input-inline">
+            @Html.DropDownList("UserCode")
+        </div>
+    </div>
+</form>
+<table id="demo" lay-filter="test"></table>
+@section scripts{
+    <script type="text/html" id="barDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+            <button class="layui-btn layui-btn-sm" lay-event="delete">移除权限</button>
+            <button class="layui-btn layui-btn-sm" lay-event="update">编辑</button>
+        </div>
+    </script>
+    <script>
+        $(function () {
+            load();
+            //$("#UserCode").on("change", function () {
+            //    var id = ("#UserCode").val();
+            //    var info = {
+            //        UserCode: id
+            //    };
+            //    table.reload("demo", {
+            //        url: "/Res/Powers" //数据接口
+            //        , where: info
+            //    });
+            //});
+            //table.on('tool(demo)', function (obj) {
+            //    var info = {
+            //        id: obj.data.Id
+            //    };
+            //    $.ajax({
+            //        url: '/Res/SysRelationDelete',
+            //        data: info,
+            //        success: function (date) {
+            //            table.reload("demo", {
+            //                url: "/Res/Powers" //数据接口
+            //            });
+            //            if (date == true) {
+            //                layer.msg("删除失败");
+            //                return;
+            //            }
+            //            layer.msg("删除成功");
+            //        }
+            //    });
+            //});
+        })
+        function load() {
+            var layer = layui.layer;
+            var table = layui.table;
+
+            table.render({
+                elem: '#demo'  //绑定元素
+                , url: '/Res/Powers'
+                , title: ['已分配权限', '未分配权限']
+                ,page:true
+                , cols: [[
+                    { field: 'ResNum', title: '菜单编号', width: 120, sort: true, fixed: 'left' }
+                    , { field: 'ResName', title: '菜单名称' }
+                ]]
+            })
+        }
+    </script>
+}
+
+

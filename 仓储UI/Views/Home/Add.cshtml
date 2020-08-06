@@ -1,0 +1,55 @@
+﻿@using 仓储Model
+@model Admin
+<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+<br />
+<form class="layui-form " action="" method="post" >
+    <div class="layui-form-item">
+        <label class="layui-form-label ">用户名编码</label>
+        <div class="layui-input-inline">
+            <input type="text"  name="UserCode" disabled placeholder="自动生成编号" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="UserName" required lay-verify="required" placeholder="请输入用户" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="PassWord" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" >
+        </div>
+        <label class="layui-form-label">确认密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="PassWord1" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-inline">
+            <input type="text" name="Email" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">电话</label>
+        <div class="layui-input-inline">
+            <input type="text" name="Phone" required lay-verify="required" placeholder="请输入电话" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">真名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="ZName" required lay-verify="required" placeholder="请输入真名" autocomplete="off" class="layui-input" >
+        </div>
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-inline" >
+            @Html.DropDownList("RoleNum")
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门</label>
+        <div class="layui-input-inline" >
+            @Html.DropDownList("DepartNum")
+        </div>
+    </div>
+</form>
+<script src="~/Content/layui/layui.all.js"></script>
+<script>
+</script>

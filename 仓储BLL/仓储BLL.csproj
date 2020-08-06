@@ -50,6 +50,8 @@
     <Compile Include="SysRelationManager.cs" />
     <Compile Include="SysResourceManager.cs" />
     <Compile Include="SysRoleManager.cs" />
+    <Compile Include="WJ_StockInManager.cs" />
+    <Compile Include="WJ_StockInTypeManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\仓储DAL\仓储DAL.csproj">

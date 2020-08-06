@@ -1,0 +1,19 @@
+﻿@using 仓储Model
+@model SysDepart
+<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+<form class="layui-form" action="" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门编号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="DepartNum" placeholder="请输入部门编码" autocomplete="off" class="layui-input" value="@Model.DepartNum">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="DepartName" placeholder="请输入部门名称" autocomplete="off" class="layui-input" value="@Model.DepartName">
+        </div>
+    </div>
+</form>
+<script>
+</script>
