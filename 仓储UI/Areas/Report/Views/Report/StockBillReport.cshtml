@@ -26,9 +26,7 @@
                 @Html.DropDownList("LocalTypeList")
             </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
+        <div class="layui-inline">
             <button type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
         </div>
     </div>
@@ -41,12 +39,6 @@
 
 
 @section scripts{
-    <script type="text/html" id="barDemo">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="update">编辑</button>
-            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete">删除</button>
-        </div>
-    </script>
 
     <script>
         $(function () {
@@ -55,15 +47,11 @@
                 Loading();
             })
 
-
-
         })//页面加载
-
-
 
         function Loading() {
             var table = layui.table;
-            var tableurl = "/api/LocationAPI/LocationList";
+            var tableurl = "/api/ReportAPI/ReportList";
             var LocalName = $("[name='LocalName']").val();
             var LocalTypeID = $("[name='LocalTypeList']").val();
             var ProductName = $("[name='ProductName']").val();
@@ -74,145 +62,24 @@
                 , url: tableurl //数据接口
                 , where: { LocalName: LocalName, LocalTypeID: LocalTypeID, ProductName: ProductName }
                 , page: true //开启分页
-                , limit: 5
+                , limit: 10
                 , limits: [5, 10, 15, 20, 30, 50]
                 , toolbar: true 
-                , defaultToolbar: "['exports']"
+                , totalRow: true    
                 , cols: [[ //表头
-                    { field: 'LocalNum', title: '库位编号', sort: true, fixed: 'left' }
-                    , { field: 'LocalName', title: '库位名称'}
-                    , { field: 'StorageName', title: '仓库名称' }
-                    , { field: 'LocalTypeName', title: '库位类型' }
-                    , { field: 'IsDefault', title: '是否默认' }
-                    , { field: 'CreateTime', title: '创建时间' }
-                    , { title: '操作', fixed: 'right', align: 'center', toolbar: '#barDemo' }
+                    { field: 'LocalName', title: '库位', sort: true, fixed: 'left'}
+                    , { field: 'LocalTypeName', title: '库位类型'}
+                    , { field: 'SnNum', title: '产品编号' }
+                    , { field: 'BarCode', title: '产品条码' }
+                    , { field: 'ProductName', title: '产品名称' }
+                    , { field: 'CateName', title: '类别' }
+                    , { field: 'Size', title: '规格' }
+                    , { field: 'MaxNum', title: '预警值下限' }
+                    , { field: 'MinNum', title: '预警值上限', totalRowText: '合计：'}
+                    , { field: 'Num', title: '库存数', totalRow: true}
                 ]]
             });//动态表格
-            //添加按钮
-            table.on('toolbar(test)', function (obj) {
-                var checkStatus = table.checkStatus(obj.config.id),
-                    data = checkStatus.data;
-                data = eval("(" + JSON.stringify(data) + ")");
-                switch (obj.event) {
-                    case 'add':
-                        layer.open({
-                            type: 2,
-                            title: "添加库位",
-                            area: ['50%', '50%'],
-                            maxmin: true,
-                            //shadeClose: true,
-                            shade: 0.4,
-                            skin: 'layui-layer-rim',
-                            content: "/Storage/Location/Add",
-                            btn: ['保存','取消'],
-                            closeBtn: 1,
-                            yes: function (index, layero) {
-                                var divv = layer.getChildFrame('body', index);
-                                var info = {
-                                    LocalName: divv.find("input[name=LocalName]").val(),
-                                    LocalTypeID: divv.find("select[name=LocalTypeList]").val(),
-                                    StorageNum: divv.find("select[name='StorageList']").val(),
-                                    IsDefault: divv.find("select[name='IsDefault']").val()
-                                }
-                                $.ajax({
-                                    url: "/api/LocationAPI/Add",
-                                    data:info,
-                                    type: "post",
-                                    success: function (data) {
-                                        if (data == true) {
-                                            layer.msg("新增成功！");
-                                            layer.close(index);
-                                        }
-                                    }, error: function (xhr) {
-                                        layer.msg("出错：" + xhr.responseText);
-                                    }
-                                })
-                            },
-                            end: function () {
-                                table.reload("MyTable");
-                                //parent.layui.table.reload('partnerslist');
-                            }
-                        });
-                        break;
-                }
-            });//新增库位
-
-            //监听工具条
-            table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-                var data = obj.data; //获得当前行数据
-                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-                var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
-
-                if (layEvent == 'detail') { //查看
-                    //do somehing
-                } else if (layEvent == 'delete') { //删除
-                    layer.confirm('真的删除行么', function (index) {
-                        var id = obj.data.LocalNum;
-                        //obj.del(); 删除对应行（tr）的DOM结构，并更新缓存
-                        layer.close(index);
-                        //向服务端发送删除指令
-                        $.ajax({
-                            url: '/api/LocationAPI/del/' + id,
-                            type: 'post',
-                            success: function (data) {
-                                if (data == true) {
-                                    layer.msg("删除成功！");
-                                    table.reload("MyTable");
-                                }
-                            },
-                            error: function (xhr) {
-                                layer.msg("出错：" + xhr.responseText);
-                            }
-                        });//ajax删除
-                    });
-                } else if (layEvent == 'update') { //编辑
-                    //do something
-                    layer.msg("修改！");
-                    //同步更新缓存对应的值
-                    var id = obj.data.LocalNum;
-                    layer.open({
-                        type: 2,
-                        title: "编辑库位",
-                        area: ['50%', '50%'],
-                        maxmin: true,
-                        shade: 0.4,
-                        skin: 'layui-layer-rim',
-                        content: "/Storage/Location/Upd/" + id,
-                        btn: ['保存', '取消'],
-                        closeBtn: 1,
-                        yes: function (index, layero) {
-                            var divv = layer.getChildFrame('body', index);
-                            var info = {
-                                LocalNum: divv.find("input[name=LocalNum]").val(),
-                                LocalName: divv.find("input[name=LocalName]").val(),
-                                LocalTypeID: divv.find("select[name=LocalTypeList]").val(),
-                                StorageNum: divv.find("select[name='StorageList']").val(),
-                                IsDefault: divv.find("select[name='IsDefault']").val()
-                            }
-                            $.ajax({
-                                url: "/api/LocationAPI/Upd",
-                                data: info,
-                                type: "post",
-                                success: function (data) {
-                                    if (data == true) {
-                                        layer.msg("修改成功！");
-                                        layer.close(index);
-                                    }
-                                }, error: function (xhr) {
-                                    layer.msg("出错：" + xhr.responseText);
-                                }
-                            })
-                        },
-                        end: function () {
-                            table.reload("MyTable");
-                            //parent.layui.table.reload('partnerslist');
-                        }
-                    });
-                } else if (layEvent === 'LAYTABLE_TIPS') {
-                    layer.alert('Hi，头部工具栏扩展的右侧图标。');
-                }
-            });
-
+           
         }//加载方法
 
 

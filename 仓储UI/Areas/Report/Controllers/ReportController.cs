@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using 仓储Model;
 
 namespace 仓储UI.Areas.Report.Controllers
 {
     public class ReportController : Controller
     {
+        Completion db = new Completion();
         // GET: Report/Report
         /// <summary>
         /// 库存清单
@@ -15,6 +17,10 @@ namespace 仓储UI.Areas.Report.Controllers
         /// <returns></returns>
         public ActionResult StockBillReport()
         {
+            var list1 = db.BI_LocaType.ToList();
+            var info1 = new BI_LocaType { LocalTypeID = 0, LocalTypeName = "--请选择库位类型--" };
+            list1.Insert(0, info1);
+            ViewBag.LocalTypeList = new SelectList(list1, "LocalTypeID", "LocalTypeName");
             return View();
         }
         /// <summary>

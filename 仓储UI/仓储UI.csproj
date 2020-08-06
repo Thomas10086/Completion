@@ -159,6 +159,7 @@
     <Compile Include="Areas\Product\Controllers\GoodsController.cs" />
     <Compile Include="Areas\Product\ProductAreaRegistration.cs" />
     <Compile Include="Areas\Report\Controllers\ManagerController.cs" />
+    <Compile Include="Areas\Report\Controllers\ReportAPIController.cs" />
     <Compile Include="Areas\Report\Controllers\ReportController.cs" />
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Areas\Returns\Controllers\ProductController.cs" />
