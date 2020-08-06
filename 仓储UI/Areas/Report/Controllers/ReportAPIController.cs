@@ -62,5 +62,33 @@ namespace 仓储UI.Areas.Report.Controllers
             });
             return Json(new { code = 0, msg = "联系管理员吧", count = total, data = LocalProductlist });
         }
+
+
+        public IHttpActionResult ProductList(int page, int limit, string Product)
+        {
+            var list = from x in db.BI_Product
+                       select new
+                       {
+                           x.SnNum
+                           ,x.BarCode
+                           ,x.ProductName
+                           , CateName=x.BI_ProductCategory.CateName
+                           ,x.MaxNum
+                           ,x.MinNum
+                           ,x.Size
+                           ,x.BI_LocalProduct
+                           ,x.WJ_StockInDetails
+                           ,x.WJ_StockOutDetails
+                           ,x.WJ_BreakageDetails
+                       };
+            if (!string.IsNullOrEmpty(Product))
+            {
+                list = list.Where(x => x.ProductName.Contains(Product) || x.SnNum.Contains(Product) || x.BarCode.Contains(Product));
+            }
+            var total = list.Count();
+            var ProductList=
+
+            return Json(new { code = 0, msg = "联系管理员吧", count = total, data = ProductList });
+        }
     }
 }

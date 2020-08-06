@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "ProductReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="layui-inline">
+    <i class="layui-icon layui-icon-home"></i><a href="/Home/Index">首页</a>
+    --
+    <div class="layui-input-inline">
+        <i class="layui-icon layui-icon-website"></i>在线库存报表
+    </div>
+</div>
+
+<form class="layui-form">
+    <br />
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">产品/编号/条码/名称</label>
+            <div class="layui-input-inline">
+                <input name="Product" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
+        </div>
+    </div>
+</form>
+<div id="main" style="margin:0 auto;">
+    <div class="table">
+        <table id="demo" lay-filter="test"></table>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script>
+                $(function () {
+                    Loading();
+                    $("#btnSearch").click(function () {
+                        Loading();
+                    })
+
+                })//页面加载
+
+                function Loading() {
+                    var table = layui.table;
+                    var tableurl = "/api/ReportAPI/ProductList";
+                    var Product = $("[name='Product']").val();
+                    table.render({
+                        elem: '#demo'
+                        , id: "MyTable"
+                        //, height: 770
+                        , url: tableurl //数据接口
+                        , where: { Product: Product }
+                        , page: true //开启分页
+                        , limit: 10
+                        , limits: [5, 10, 15, 20, 30, 50]
+                        , toolbar: true
+                        , totalRow: true
+                        , cols: [[ //表头
+                            { field: 'SnNum', title: '产品编号', sort: true, fixed: 'left' }
+                            , { field: 'BarCode', title: '产品条码' }
+                            , { field: 'SnNum', title: '产品名称' }
+                            , { field: 'BarCode', title: '类别' }
+                            , { field: 'MinNum', title: '预警值下限' }
+                            , { field: 'MaxNum', title: '预警值上限' }
+                            , { field: 'Size', title: '规格', totalRowText: '总计：' }
+                            , { field: 'Num', title: '库存数', totalRow: true}
+                            , { field: 'InCount', title: '进货总数', totalRow: true }
+                            , { field: 'OutCount', title: '出货总数', totalRow: true }
+                            , { field: 'BreCount', title: '报损总数', totalRow: true }
+                        ]]
+                    });//动态表格
+
+                }//加载方法
+
+
+    </script>
+
+}
+
