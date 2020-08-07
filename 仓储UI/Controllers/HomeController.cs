@@ -150,7 +150,6 @@ namespace 仓储UI.Controllers
         public ActionResult Left()
         {
             SysResourceManager bll = new SysResourceManager();
-            var info = this.Session["Admiats"] as 仓储Model.Admin;
             var list = bll.QueryLeft();
             return PartialView(list);
         }
@@ -186,6 +185,7 @@ namespace 仓储UI.Controllers
                 x.RoleNum,
                 x.RoleName,
                 //CreateTime=Convert.ToDateTime(x.CreateTime).ToString("yyyy-MM-dd HH:mm:ss"),
+                //CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 x.CreateTime,
                 x.IsDelete,
                 x.Remark

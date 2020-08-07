@@ -47,7 +47,7 @@ namespace 仓储UI.Areas.InStorage.Controllers
             var list1 = list.OrderByDescending(x => x.CreateTime).Skip((page - 1) * limit).Take(limit).Select(x => new
             {
                 x.StoINum,
-                //CreateTime= Convert.ToDateTime(x.CreateTime).ToString("yyyy-MM-dd hh:mm:ss"),
+                //CreateTime= x.CreateTime.ToString("yyyy-MM-dd hh:mm:ss"),
                 x.CreateTime,
                 x.StoITypeName,
                 x.SupName,

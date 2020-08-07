@@ -26,7 +26,7 @@ namespace 仓储Model
 
         public int IsDelete { get; set; }
 
-        public DateTime? CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
 
         [StringLength(50)]
         public string Remark { get; set; }

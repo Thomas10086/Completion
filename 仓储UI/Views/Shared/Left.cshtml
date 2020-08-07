@@ -1,19 +1,36 @@
-﻿@using 仓储Model
+﻿@{ 
+    var info = this.Session["ADMIN"] as 仓储Model.Admin;
+    var RoleNum = info.RoleNum;
+}
+
+@using 仓储Model
 @model List<SysResource>
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
-        @foreach (var item in Model)
+        @if (RoleNum != null)
         {
-            <li class="layui-nav-item ">
-                <a class="" href="javascript:;">@item.ResName</a>
-                <dl class="layui-nav-child">
-                    @foreach (var i in item.SysResource1)
-                    {
-                        <dd><a href="@i.Url">@i.ResName</a></dd>
-                    }
-                </dl>
-            </li>
+            foreach (var item in info.SysRole.SysRelation)
+            {
+                if (item.ResNum.EndsWith("1000"))
+                {
+                    <li class="layui-nav-item ">
+                        <a class="" href="javascript:;">@item.SysResource.ResName</a>
+                        <dl class="layui-nav-child">
+                            @foreach (var item2 in info.SysRole.SysRelation)
+                            {
+                                if (item2.ResNum.EndsWith("1000")) {
+                                    continue;
+                                }
+                                if (item2.SysResource.ParentNum.Equals(item.ResNum))
+                                {
+                                    <dd><a href="@item2.SysResource.Url">@item2.SysResource.ResName</a></dd>
+                                }
+                            }
+                        </dl>
+                    </li>
+                }
+            }
         }
-            <li class="layui-nav-item layui-nav-itemed">
-                <a href="javascript:;"><i class="layui-icon layui-icon-username"></i> 退出系统</a>
-            </li>
+        <li class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;"><i class="layui-icon layui-icon-username"></i> 退出系统</a>
+        </li>
     </ul>

@@ -108,20 +108,20 @@
             , url: '/InStorage/Product/Lists' //数据接口
             , page: true //开启分页
             , where: { StoINum: StoINum }
-            , limit: 3
-            , limits: [3, 5, 10]
+            , limit: 10
+            , limits: [5, 10, 20]
             , toolbar: '#complain_toolbar'
             , cols: [[ //表头
-                { field: 'StoINum', title: '入库编号', width: 150, sort: true, fixed: 'left' }
+                { field: 'StoINum', title: '入库编号',  sort: true, fixed: 'left' }
                 , { field: 'StoITypeName', title: '类型名称' }
-                , { field: 'SupName', title: '供应商id' }
+                , { field: 'SupName', title: '供应商' }
                 , { field: 'SSName', title: '状态' }
                 , { field: 'ContactName', title: '联系人' }
                 , { field: 'OrderNum', title: '关联订单号' }
                 , { field: 'Phone', title: '联系方式' }
                 , { field: 'UserName', title: '制作人' }
                 , { field: 'Remark', title: '备注' }
-                , { field: 'CreateTime', title: '创建时间' }
+                //, { field: 'CreateTime', title: '创建时间' }
                 , { title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right' }
             ]]
         });

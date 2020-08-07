@@ -55,7 +55,7 @@ namespace 仓储UI.Areas.Storage.Controllers
                     i.StorageName,
                     i.LocalTypeName,
                     i.IsDefault,
-                    i.CreateTime
+                    CreateTime=i.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
                 });
             }
                 return Json(new {code=0,msg="", count=total,data=arrayList});

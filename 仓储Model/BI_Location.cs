@@ -44,7 +44,7 @@ namespace 仓储Model
 
         public int? IsDelete { get; set; }
 
-        public DateTime? CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BI_LocalProduct> BI_LocalProduct { get; set; }
