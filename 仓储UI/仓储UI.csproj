@@ -653,6 +653,10 @@
     <Content Include="Areas\Check\Views\Product\List.cshtml" />
     <Content Include="Areas\Bad\Views\Product\List.cshtml" />
     <Content Include="Areas\Report\Views\Report\ProductReport.cshtml" />
+    <Content Include="Areas\InStorage\Views\Product\AddBI_Location.cshtml" />
+    <Content Include="Areas\InStorage\Views\Product\AddBI_Products.cshtml" />
+    <Content Include="Areas\InStorage\Views\Product\BI_Products.cshtml" />
+    <Content Include="Areas\InStorage\Views\Product\WJ_StockIns.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\Res\Add.cshtml" />

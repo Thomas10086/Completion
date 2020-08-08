@@ -29,7 +29,7 @@ namespace 仓储UI.Areas.Storage.Controllers
                            s.BI_Storage.StorageName,
                            s.LocalTypeID,
                            s.BI_LocaType.LocalTypeName,
-                           s.IsDefault,
+                           IsDefault=s.IsDefault==0? "是":"否",
                            s.CreateTime
                        };
             if (!string.IsNullOrEmpty(LocalName))

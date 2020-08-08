@@ -1,0 +1,51 @@
+﻿<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+
+<div class="layui-form-item">
+    <label class="layui-form-label">类别编号/名称</label>
+    <div class="layui-input-inline">
+        <input type="text" name="title" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" id="BarCode">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">类别</label>
+    <div class="layui-input-inline">
+        @Html.DropDownList("BI_ProductCategoryList");
+    </div>
+    <button type="button" class="layui-btn" onclick="loca()">查询</button>
+</div>
+<table id="demo" lay-filter="test"></table>
+<script src="~/Content/layui/lay/jquery-1.10.2.min.js"></script>
+<script src="~/Content/layui/layui.all.js"></script>
+<script>
+    $(function () {
+        load();
+    })
+    function load() {
+        var table = layui.table;
+        var BarCode = $("#BarCode").val();
+        table.render({
+            elem: '#demo'
+            , id: "mytables"
+            , url: '/InStorage/Product/WJ_StockInQuery' //数据接口
+            , page: true //开启分页
+            , where: { BarCode: BarCode }
+            , limit: 3
+            , shade: 0.8
+            , limits: [3, 5, 10]
+            , offset: 'auto'
+            , cols: [[ //表头
+                { field: 'SupNum', title: '用户名', sort: true, fixed: 'left' }
+                , { field: 'SupName', title: '用户编号' }
+                , { field: 'SupTypeName', title: '真名' }
+                , { field: 'Phone', title: '邮箱' }
+                , { field: 'Fax', title: '电话' }
+                , { field: 'Email', title: '备注' }
+                , { field: 'ContactName', title: '角色名称' }
+                , { field: 'Address', title: '部门名称' }
+                , { field: 'CreateTime', title: '是否注销' }
+                , { field: 'IsDelete', title: '登录次数' }
+                , { field: 'Description', title: '登录次数' }
+            ]]
+        });
+    }
+</script>

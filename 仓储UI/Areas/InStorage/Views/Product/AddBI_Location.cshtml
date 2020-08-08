@@ -1,0 +1,46 @@
+﻿<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+<form class="layui-form" action="" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名编码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required" placeholder="请输入用户编号或用户名" autocomplete="off" class="layui-input" id="LocalNum">
+        </div>
+        <label class="layui-form-label">库位类型</label>
+        <div class="layui-input-inline">
+            @Html.DropDownList("BI_ProductCategoryList")
+        </div>
+        <button type="button" class="layui-btn" onclick="loca()">查询</button>
+    </div>
+</form>
+<table id="demo" lay-filter="test"></table>
+<script src="~/Content/layui/lay/jquery-1.10.2.min.js"></script>
+<script src="~/Content/layui/layui.all.js"></script>
+<script>
+    $(function () {
+        load();
+    });
+    function load() {
+        var table = layui.table;
+        var LocalNum = $("#LocalNum").val();
+        table.render({
+            elem: '#demo'
+            , id: "mytables"
+            , url: '/InStorage/Product/AddBI_Locations' //数据接口
+            , page: true //开启分页
+            , where: { LocalNum: LocalNum }
+            , limit: 3
+            , limits: [3, 5, 10]
+            , shade: 0.8
+            , offset: 'auto'
+            , cols: [[ //表头
+                { field: 'LocalNum', title: '用户名', sort: true, fixed: 'left' }
+                , { field: 'LocalName', title: '用户编号' }
+                , { field: 'LocalTypeName', title: '真名' }
+                , { field: 'IsForbid', title: '邮箱' }
+                , { field: 'IsDefault', title: '电话' }
+                , { field: 'CreateTime', title: '电话' }
+            ]]
+        });
+    }
+</script>

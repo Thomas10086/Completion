@@ -1,0 +1,45 @@
+﻿<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+<form class="layui-form" action="" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名编码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required" placeholder="请输入用户编号或用户名" autocomplete="off" class="layui-input" id="SupNum">
+        </div>
+        <button type="button" class="layui-btn" onclick="loca()">查询</button>
+    </div>
+</form>
+<table id="demo" lay-filter="test"></table>
+<script src="~/Content/layui/lay/jquery-1.10.2.min.js"></script>
+<script src="~/Content/layui/layui.all.js"></script>
+<script>
+    $(function () {
+        load();
+    });
+    function load() {
+            var table = layui.table;
+            var StoINum = $("#SupNum").val();
+            table.render({
+                elem: '#demo'
+                , id: "mytables"
+                , url: '/InStorage/Product/WJ_StockInQuery' //数据接口
+                , page: true //开启分页
+                , where: { SupNum: SupNum }
+                , limit: 3
+                , limits: [3, 5, 10]
+                , offset: 'auto'
+                , cols: [[ //表头
+                    { field: 'SupNum', title: '供应商编号', sort: true, fixed: 'left' }
+                    , { field: 'SupName', title: '供应商名称' }
+                    , { field: 'SupTypeName', title: '供应商类型名称' }
+                    , { field: 'Phone', title: '电话' }
+                    , { field: 'Fax', title: '传真' }
+                    , { field: 'Email', title: '邮箱' }
+                    , { field: 'ContactName', title: '联系人' }
+                    , { field: 'Address', title: '地址' }
+                    , { field: 'CreateTime', title: '创建时间' }
+                    , { field: 'Description', title: '描述' }
+                ]]
+            });
+    }
+</script>

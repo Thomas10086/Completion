@@ -14,5 +14,10 @@ namespace 仓储BLL
         {
 
         }
+        public List<WJ_StockIn> QueryAllId(string StoINum, int SSNum)
+        {
+            WJ_StockInService dal = new WJ_StockInService();
+            return dal.QueryId(StoINum,SSNum);
+        }
     }
 }

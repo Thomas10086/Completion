@@ -49,8 +49,12 @@
     <Compile Include="AdminService.cs" />
     <Compile Include="BaseDAL.cs" />
     <Compile Include="BI_LocationService.cs" />
+    <Compile Include="BI_LocaTypeService.cs" />
+    <Compile Include="BI_ProductCategoryService.cs" />
+    <Compile Include="BI_ProductService.cs" />
     <Compile Include="BI_StorageService.cs" />
     <Compile Include="BI_SupplierService.cs" />
+    <Compile Include="BI_SupTypeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SysDepartService.cs" />
     <Compile Include="SysRelationService.cs" />

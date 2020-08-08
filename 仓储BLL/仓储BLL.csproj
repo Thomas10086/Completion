@@ -43,8 +43,12 @@
     <Compile Include="AdminManager.cs" />
     <Compile Include="BaseBLL.cs" />
     <Compile Include="BI_LocationManager.cs" />
+    <Compile Include="BI_LocaTypeManager.cs" />
+    <Compile Include="BI_ProductCategoryManager.cs" />
+    <Compile Include="BI_ProductManager.cs" />
     <Compile Include="BI_StorageManager.cs" />
     <Compile Include="BI_SupplierManager.cs" />
+    <Compile Include="BI_SupTypeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SysDepartManager.cs" />
     <Compile Include="SysRelationManager.cs" />

@@ -1,61 +1,28 @@
-﻿
+﻿ 
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section styles{
+  
+}
 <div class="layui-tab">
     <ul class="layui-tab-title">
-        <li class="layui-this" onclick="loca()">所有</li>
-        <li class="layui-this" onclick="loca()">待审核</li>
-        <li class="layui-this" onclick="loca()">审核通过</li>
-        <li class="layui-this" onclick="loca()">审核未通过</li>
+        <li class="layui-this" value="3" onclick="loca(3)" id="All">所有</li>
+        <li class="layui-this" value="2" onclick="loca(8)">待审核</li>
+        <li class="layui-this" value="1" onclick="loca(9)">审核通过</li>
+        <li class="layui-this" value="0" onclick="loca(10)">审核未通过</li>
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
             <div class="layui-form-item">
                 <label class="layui-form-label">入库单号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" id="stoInum">
+                    <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" id="StoINums">
                 </div>
                 <button type="button" class="layui-btn" onclick="loca()">查询</button>
             </div>
             <table id="demo" lay-filter="test"></table>
-        </div>
-        <div class="layui-tab-item">
-            <div class="layui-tab-item layui-show">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">入库单号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" id="stoInum">
-                    </div>
-                    <button type="button" class="layui-btn" onclick="loca()">查询</button>
-                </div>
-                <table id="demo" lay-filter="test"></table>
-            </div>
-        </div>
-        <div class="layui-tab-item">
-              <div class="layui-tab-item layui-show">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">入库单号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" id="stoInum">
-                    </div>
-                    <button type="button" class="layui-btn" onclick="loca()">查询</button>
-                </div>
-                <table id="demo" lay-filter="test"></table>
-            </div>
-        </div>
-        <div class="layui-tab-item">
-            <div class="layui-tab-item layui-show">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">入库单号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" id="stoInum">
-                    </div>
-                    <button type="button" class="layui-btn" onclick="loca()">查询</button>
-                </div>
-                <table id="demo" lay-filter="test"></table>
-            </div>
         </div>
     </div>
 </div>
@@ -73,57 +40,84 @@
 <script src="~/Content/layui/lay/jquery-1.10.2.min.js"></script>
 <script>
     $(function () {
-        loca();
+        loca(3);
+        //$("#All").click(function () {
+        //    $("#All").addClass("disabled");
+        //    $("#All").siblings().removeClass("disabled");
+        //    loca(3)
+        //});
+        //$("#dai").click(function () {
+        //    $("#dai").addClass("disabled");
+        //    $("#dai").siblings().removeClass("disabled");
+        //    var SSNum = $("#dai").val();
+        //    loca(SSNum)
+        //});
+        //$("#sh").click(function () {
+        //    $("#sh").addClass("disabled");
+        //    $("#sh").siblings().removeClass("disabled");
+        //    var SSNum = $("#sh").val();
+        //    loca(SSNum)
+        //});
+        //$("#dsh").click(function () {
+        //    $("#dsh").addClass("disabled");
+        //    $("#dsh").siblings().removeClass("disabled");
+        //    var SSNum = $("#dsh").val();
+        //    loca(SSNum)
+        //});
         layui.use('element', function () {
             var element = layui.element;
         });
         $("#btnAdd").click(function () {
-            var layer = layui.layer;  
-                    $.ajax({
-                        type: "post",
-                        url: "/InStorage/Product/Add",
-                        data: info,
-                        success: function (data) {
-                            if (data == true) {
-                                layer.msg("新增成功");
-                                layer.close(index);
-                            }
-                            else {
-                                layer.msg("新增失败1");
-                            }
-                        },
-                        error: function (xhr) {
-                            layer.msg("错误:" + xhr.responseText);
-                        }
-                    });   
+            var layer = layui.layer;
+            $.ajax({
+                type: "post",
+                url: "/InStorage/Product/Add",
+                data: info,
+                success: function (data) {
+                    if (data == true) {
+                        layer.msg("新增成功");
+                        layer.close(index);
+                    }
+                    else {
+                        layer.msg("新增失败");
+                    }
+                },
+                error: function (xhr) {
+                    layer.msg("错误:" + xhr.responseText);
+                }
+            });
         });
     })
-    function loca() {
+    function loca(SSNum) {
         //var ss = All;
         var table = layui.table;
-        var StoINum = $("#stoInum").val();
+        StoINum = $("#StoINums").val()
         table.render({
             elem: '#demo'
             , id: "mytables"
             , url: '/InStorage/Product/Lists' //数据接口
             , page: true //开启分页
-            , where: { StoINum: StoINum }
-            , limit: 10
-            , limits: [5, 10, 20]
+            , where: { StoINum: StoINum, SSNum: SSNum}
+            , limit: 3
+            , limits: [3, 5, 10]
             , toolbar: '#complain_toolbar'
             , cols: [[ //表头
-                { field: 'StoINum', title: '入库编号',  sort: true, fixed: 'left' }
+                { checkbox: true, fixed: true },
+                { field: 'StoINum', title: '入库编号', width: 150, sort: true, fixed: 'left' }
                 , { field: 'StoITypeName', title: '类型名称' }
-                , { field: 'SupName', title: '供应商' }
+                , { field: 'SupName', title: '供应商id' }
                 , { field: 'SSName', title: '状态' }
                 , { field: 'ContactName', title: '联系人' }
                 , { field: 'OrderNum', title: '关联订单号' }
                 , { field: 'Phone', title: '联系方式' }
                 , { field: 'UserName', title: '制作人' }
                 , { field: 'Remark', title: '备注' }
-                //, { field: 'CreateTime', title: '创建时间' }
+                , { field: 'CreateTime', title: '创建时间' }
                 , { title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right' }
-            ]]
+            ]],
+            end: function () {
+                table.reload("#mytables");
+            }
         });
     }
 

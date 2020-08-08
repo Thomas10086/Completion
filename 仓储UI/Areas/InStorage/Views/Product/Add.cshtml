@@ -5,72 +5,135 @@
 }
 @using 仓储Model
 @model Admin
-    <form class="layui-form" action="" method="post">
-        <div class="layui-form-item">
-            <label class="layui-form-label">入库单编码</label>
-            <div class="layui-input-inline">
-                <input type="text" name="StoINum" disabled placeholder="自动生成编号" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">关联订单号</label>
-            <div class="layui-input-inline">
-                <input type="text" name="OrderNum" required lay-verify="required" placeholder="请输入关联订单号" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">制单人</label>
-            <div class="layui-input-inline">
-                <input type="text" name="UserCode" required lay-verify="required" placeholder="请输入制作人" autocomplete="off" class="layui-input">
-            </div>
-
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">供应商编号</label>
-            <div class="layui-input-inline">
-                <input type="text" name="SupNum" required lay-verify="required" placeholder="请输入供应商编号" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">供应商名称</label>
-            <div class="layui-input-inline">
-                <input type="text" name="SupName" required lay-verify="required" placeholder="请输入供应商名称" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">供应商联系人</label>
-            <div class="layui-input-inline">
-                <input type="text" name="Phone" required lay-verify="required" placeholder="请输入供应商联系人" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <label class="layui-form-label">备注</label>
+<link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+<style>
+</style>
+<form class="layui-form" action="" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">入库单编号</label>
         <div class="layui-input-inline">
-            <input type="text" name="ZName" required lay-verify="required" placeholder="请输入备注" autocomplete="off" class="layui-input">
+            <input type="text" name="title" lay-verify="required"  placeholder="可不填，自动生成" autocomplete="off" disabled="disabled" class="layui-input" id="StoreroomId">
         </div>
-        <label class="layui-form-label">日期</label>
-        <div class="layui-inline">
-            <input type="text" class="layui-input" id="test1">
+        <label class="layui-form-label" style="width:100px">入库单类型</label>
+        <div class="layui-input-inline">
+            @Html.DropDownList("StoITypeNum")
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">入库类型</label>
-            <div class="layui-input-inline">
-                @Html.DropDownList("StoITypeNum")
-            </div>
+        <label class="layui-form-label" style="width:100px">关联订单号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required" autocomplete="off" class="layui-input" id="StoreroomId">
         </div>
-        <div class="layui-form-item">
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="*">保存</button>
-                </div>
-            </div>
+        <label class="layui-form-label" style="width:100px">制单人</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required"  autocomplete="off"  class="layui-input" id="StoreroomId">
         </div>
-    </form>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">供应商编号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required" placeholder="请输入关键字搜索或双击点击" autocomplete="off" class="layui-input" id="BI_SupplierId">
+        </div>
+        <label class="layui-form-label" style="width:100px">供应商名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required"  autocomplete="off"  class="layui-input" id="StoreroomId">
+        </div>
+        <label class="layui-form-label" style="width:100px">供应商联系人</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required"  autocomplete="off" class="layui-input" id="StoreroomId">
+        </div>
+        <label class="layui-form-label" style="width:100px">供应商联系方式</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required"  autocomplete="off"  class="layui-input" id="StoreroomId">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">制单时间</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required" autocomplete="off"  class="layui-input" id="StoreroomId">
+        </div>
+        <label class="layui-form-label" style="width:100px">备注</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required" autocomplete="off" class="layui-input" id="StoreroomId">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-left:120px">
+        <button type="button" class="layui-btn" id="XZ">新增产品</button>
+        <button type="button" class="layui-btn" >保存</button>
+        <button type="button" class="layui-btn" >取消</button>
+    </div>
+</form>
+<script src="~/Content/layui/lay/jquery-1.10.2.min.js"></script>
+<script src="~/Content/layui/layui.all.js"></script>
 @section scripts{
     <script>
         $(function () {
-            layui.use('laydate', function () {
-                var laydate = layui.laydate;
+            load();
 
-                laydate.render({
-                    elem: '#test1'
+            $("#BI_SupplierId").click(function () {    
+                var layer = layui.layer;
+
+                layer.open({
+                    type: 2,
+                    title: "选择供应商",
+                    content: ["WJ_StockIns"],
+                    area: ['70%', '70%'],
+                    success: function (layero, index) {
+                        //找到它的子窗口的body
+                        var body = layer.getChildFrame('body', index);  //巧妙的地方在这里哦
+                        //在这里可以为子窗口元素赋值
+                        // body.contents().find("#input1").val(input1);
+                        // console.log("子窗开启成功")
+                    },
+                    end: function () {
+                        vm.reload(); //页面重新加载
+                        // console.log("子窗关闭成功")
+                    }
+                });
+
+            });
+            $("#XZ").click(function () {    
+                var layer = layui.layer;
+
+                layer.open({
+                    type: 2,
+                    title: "入库产品",
+                    area: ['25%', '60%'],
+                    maxmin: true,
+                    content: ["BI_Products"],
+                    id: 'ss',
+                    end: function () {
+                        vm.reload(); //页面重新加载
+                        // console.log("子窗关闭成功")
+                    }
                 });
             });
         })
         function load() {
-
+            var table = layui.table;
+            var StoINum = $("#stoInum").val();
+            table.render({
+                elem: '#demo'
+                , id: "mytables"
+                , url: '/InStorage/Product/Lists' //数据接口
+                , page: true //开启分页
+                , where: { StoINum: StoINum }
+                , limit: 3
+                , limits: [3, 5, 10]
+                , toolbar: '#complain_toolbar'
+                , cols: [[ //表头
+                    { checkbox: true, fixed: true },
+                    { field: 'StoINum', title: '入库编号', width: 150, sort: true, fixed: 'left' }
+                    , { field: 'StoITypeName', title: '类型名称' }
+                    , { field: 'SupName', title: '供应商id' }
+                    , { field: 'SSName', title: '状态' }
+                    , { field: 'ContactName', title: '联系人' }
+                    , { field: 'OrderNum', title: '关联订单号' }
+                    , { field: 'Phone', title: '联系方式' }
+                    , { field: 'UserName', title: '制作人' }
+                    , { field: 'Remark', title: '备注' }
+                    , { field: 'CreateTime', title: '创建时间' }
+                    , { title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right' }
+                ]]
+            });
         }
     </script>
     }
-
