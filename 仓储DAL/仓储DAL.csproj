@@ -50,6 +50,7 @@
     <Compile Include="BaseDAL.cs" />
     <Compile Include="BI_LocationService.cs" />
     <Compile Include="BI_LocaTypeService.cs" />
+    <Compile Include="BI_MeasureService.cs" />
     <Compile Include="BI_ProductCategoryService.cs" />
     <Compile Include="BI_ProductService.cs" />
     <Compile Include="BI_StorageService.cs" />

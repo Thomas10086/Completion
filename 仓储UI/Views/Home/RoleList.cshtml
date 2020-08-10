@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "RoleList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -36,7 +35,7 @@
                 layer.open({
                     type: 2,
                     content: "/SysRole/Add",
-                    area: ['24%', '30%'],
+                    area: ['36%', '45%'],
                     btn: ['保存', '关闭'],
                     closeBtn: 1,
                     yes: function (index, layero) {
@@ -82,8 +81,8 @@
                     , id: 'mytables'
                     , url: '/Home/RoleLists' //数据接口
                     , page: true //开启分页
-                    , limit: 3
-                    , limits: [3, 5, 10]
+                    , limit: 10
+                    , limits: [5, 10, 20]
                     , toolbar: '#complain_toolbar'
                     , where: { RoleName: RoleName }
                     , cols: [[ //表头

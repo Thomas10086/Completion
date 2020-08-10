@@ -267,7 +267,6 @@ namespace 仓储UI.Areas.InStorage.Controllers
                            x.LocalNum,
                            x.LocalName,
                            LocalTypeName=x.BI_LocaType.LocalTypeName,
-                           x.IsForbid,
                            x.IsDefault,
                            x.CreateTime
                        };
@@ -281,7 +280,6 @@ namespace 仓储UI.Areas.InStorage.Controllers
                 x.LocalNum,
                 x.LocalName,
                 x.LocalTypeName,
-                x.IsForbid,
                 x.IsDefault,
                 x.CreateTime
             });

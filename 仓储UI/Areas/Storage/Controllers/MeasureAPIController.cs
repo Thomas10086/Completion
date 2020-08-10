@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using 仓储BLL;
 using 仓储Model;
 
 namespace 仓储UI.Areas.Storage.Controllers
@@ -40,6 +41,12 @@ namespace 仓储UI.Areas.Storage.Controllers
             info.MeasureNum = info1.Substring(0, 4) + (Convert.ToInt32(info1.Substring(4, 2)) + 1).ToString();
             db.BI_Measure.Add(info);
             var bl = db.SaveChanges() > 0;
+            return Json(bl);
+        }
+        [HttpPost]
+        public IHttpActionResult Upd(BI_Measure info)
+        {
+            var bl= new BI_MeasureManager().Update(info);
             return Json(bl);
         }
         [HttpPost]

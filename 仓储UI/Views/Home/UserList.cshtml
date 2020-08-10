@@ -32,13 +32,46 @@
         $(function () {
             loca();
           
+            
+        });
+
+        /**加载 */
+        function loca() {
+
+            var table = layui.table;
+            var UserName = $("#userName").val();
+            table.render({
+                elem: '#demo'
+                , id: "mytables"
+                , url: '/Home/UserLists' //数据接口
+                , page: true //开启分页
+                , where: { UserName: UserName }
+                , limit: 10
+                , limits: [5, 10, 20]
+                , offset: 'auto'
+                , toolbar: '#complain_toolbar'
+                , cols: [[ //表头
+                    { field: 'UserName', title: '用户名', sort: true, fixed: 'left' }
+                    , { field: 'UserCode', title: '用户编号' }
+                    , { field: 'ZName', title: '真名' }
+                    , { field: 'Email', title: '邮箱' }
+                    , { field: 'Phone', title: '电话' }
+                    , { field: 'RoleName', title: '角色名称' }
+                    , { field: 'DepartName', title: '部门名称' }
+                    , { field: 'Remark', title: '备注' }
+                   // , { field: 'IsDelete', title: '是否注销' }
+                    //, { field: 'LoginCount', title: '登录次数' }
+                    , { title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right' }
+                ]]
+            });
+
             /*新增*/
             $("#btnAdd").click(function () {
                 var layer = layui.layer;
                 layer.open({
                     type: 2,
                     content: "/Home/Add",
-                    area: ['50%', '50%'],
+                    area: ['50%', '62%'],
                     btn: ['保存', '关闭'],
                     closeBtn: 1,
                     yes: function (index, layero) {
@@ -68,8 +101,8 @@
                             data: info,
                             success: function (data) {
                                 if (data == true) {
-                                    layer.msg("新增成功");
                                     layer.close(index);
+                                    table.reload("mytables");
                                 }
                                 else {
                                     layer.msg("新增失败");
@@ -85,37 +118,7 @@
                     }
                 });
             });
-        });
 
-        /**加载 */
-        function loca() {
-
-            var table = layui.table;
-            var UserName = $("#userName").val();
-            table.render({
-                elem: '#demo'
-                , id: "mytables"
-                , url: '/Home/UserLists' //数据接口
-                , page: true //开启分页
-                , where: { UserName: UserName }
-                , limit: 3
-                , limits: [3, 5, 10]
-                , offset: 'auto'
-                , toolbar: '#complain_toolbar'
-                , cols: [[ //表头
-                    { field: 'UserName', title: '用户名', sort: true, fixed: 'left' }
-                    , { field: 'UserCode', title: '用户编号' }
-                    , { field: 'ZName', title: '真名' }
-                    , { field: 'Email', title: '邮箱' }
-                    , { field: 'Phone', title: '电话' }
-                    , { field: 'Remark', title: '备注' }
-                    , { field: 'RoleName', title: '角色名称' }
-                    , { field: 'DepartName', title: '部门名称' }
-                    , { field: 'IsDelete', title: '是否注销' }
-                    , { field: 'LoginCount', title: '登录次数' }
-                    , { title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right' }
-                ]]
-            });
             /*删除*/
             table.on('tool(test)', function (obj) {
                 //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
@@ -149,7 +152,7 @@
                     layer.open({
                         type: 2,
                         content: "/Update/UpdateAdmin/" + id,
-                        area: ['800px', '400px'],
+                        area: ['50%', '55%'],
                         btn: ['保存', '关闭'],
                         closeBtn: 1,
                         yes: function (index, layero) {

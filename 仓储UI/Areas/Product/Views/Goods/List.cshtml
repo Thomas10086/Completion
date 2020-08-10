@@ -27,6 +27,11 @@
             <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete">删除</button>
         </div>
     </script>
+    <script type="text/html" id="complain_toolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
+        </div>
+    </script>
     <script>
         $(function () {
             Loading();
@@ -48,9 +53,9 @@
                 , page: true //开启分页
                 , limit: 10
                 , limits: [5, 10, 15, 20]
-                , toolbar: true
+                , toolbar: '#complain_toolbar'
                 , cols: [[ //表头
-                    { field: 'CateNum', title: '类别编号',  sort: true, fixed: 'left' }
+                    { field: 'CateNum', title: '类别编号', sort: true, fixed: 'left' }
                     , { field: 'CateName', title: '类别名称' }
                     , { field: 'UserName', title: '创建人' }
                     , { field: 'CreateTime', title: '创建时间' }

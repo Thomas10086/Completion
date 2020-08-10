@@ -9,9 +9,9 @@
 <div class="layui-tab">
     <ul class="layui-tab-title">
         <li class="layui-this" value="3" onclick="loca(3)" id="All">所有</li>
-        <li class="layui-this" value="2" onclick="loca(8)">待审核</li>
-        <li class="layui-this" value="1" onclick="loca(9)">审核通过</li>
-        <li class="layui-this" value="0" onclick="loca(10)">审核未通过</li>
+        <li class="layui-this" value="2" onclick="loca(4)">待审核</li>
+        <li class="layui-this" value="1" onclick="loca(5)">审核通过</li>
+        <li class="layui-this" value="0" onclick="loca(6)">审核未通过</li>
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
@@ -28,7 +28,7 @@
 </div>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="update">编写</button>
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="update">查看</button>
         <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete">删除</button>
     </div>
 </script>
@@ -102,8 +102,8 @@
             , limits: [3, 5, 10]
             , toolbar: '#complain_toolbar'
             , cols: [[ //表头
-                { checkbox: true, fixed: true },
-                { field: 'StoINum', title: '入库编号', width: 150, sort: true, fixed: 'left' }
+               // { checkbox: true, fixed: true },
+                { field: 'StoINum', title: '入库编号',  sort: true, fixed: 'left' }
                 , { field: 'StoITypeName', title: '类型名称' }
                 , { field: 'SupName', title: '供应商id' }
                 , { field: 'SSName', title: '状态' }
@@ -112,7 +112,7 @@
                 , { field: 'Phone', title: '联系方式' }
                 , { field: 'UserName', title: '制作人' }
                 , { field: 'Remark', title: '备注' }
-                , { field: 'CreateTime', title: '创建时间' }
+               // , { field: 'CreateTime', title: '创建时间' }
                 , { title: '操作', align: 'center', toolbar: '#barDemo', fixed: 'right' }
             ]],
             end: function () {

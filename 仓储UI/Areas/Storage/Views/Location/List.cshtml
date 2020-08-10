@@ -28,8 +28,8 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
-            <button id="btnReset" type="reset" class="layui-btn layui-btn-normal">重置</button>
+            <button onclick="Loading()" type="button" class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
+            <button onclick="Loading()" id="btnReset" type="reset" class="layui-btn layui-btn-normal" >重置</button>
         </div>
     </div>
 </form>
@@ -55,12 +55,6 @@
     <script>
         $(function () {
             Loading();
-            $("#btnSearch").click(function () {
-                Loading();
-            })
-
-            
-
         })//页面加载
 
 
@@ -78,7 +72,7 @@
                 , url: tableurl //数据接口
                 , where: { LocalName: LocalName, LocalTypeID: LocalTypeID, StorageNum: StorageNum }
                 , page: true //开启分页
-                , limit: 5
+                , limit: 10
                 , limits: [5, 10, 15, 20, 30, 50]
                 , toolbar: '#complain_toolbar'
                 , cols: [[ //表头
@@ -123,7 +117,6 @@
                                     type: "post",
                                     success: function (data) {
                                         if (data == true) {
-                                            layer.msg("新增成功！");
                                             layer.close(index);
                                         }
                                     }, error: function (xhr) {
@@ -159,7 +152,6 @@
                             type: 'post',
                             success: function (data) {
                                 if (data == true) {
-                                    layer.msg("删除成功！");
                                     table.reload("MyTable");
                                 }
                             },
@@ -170,7 +162,6 @@
                     });
                 } else if (layEvent == 'update') { //编辑
                     //do something
-                    layer.msg("修改！");
                     //同步更新缓存对应的值
                     var id = obj.data.LocalNum;
                     layer.open({
@@ -190,8 +181,7 @@
                                 LocalName: divv.find("input[name=LocalName]").val(),
                                 LocalTypeID: divv.find("select[name=LocalTypeList]").val(),
                                 StorageNum: divv.find("select[name='StorageList']").val(),
-                                IsDefault: divv.find("select[name='IsDefault']").val(),
-                                IsForbid:'否'
+                                IsDefault: divv.find("select[name='IsDefault']").val()
                             }
                             $.ajax({
                                 url: "/api/LocationAPI/Upd",
@@ -199,7 +189,6 @@
                                 type: "post",
                                 success: function (data) {
                                     if (data == true) {
-                                        layer.msg("修改成功！");
                                         layer.close(index);
                                     }
                                 }, error: function (xhr) {

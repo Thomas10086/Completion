@@ -37,8 +37,6 @@ namespace 仓储Model
 
         public double? Height { get; set; }
 
-        [StringLength(2)]
-        public char? IsForbid { get; set; }
 
         public int? IsDefault { get; set; }
 

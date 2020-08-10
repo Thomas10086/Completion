@@ -35,7 +35,7 @@
                 layer.open({
                     type: 2,
                     content: "/SysDepar/Add",
-                    area: ['23.5%', '25%'],
+                    area: ['35%', '40%'],
                     btn: ['保存', '关闭'],
                     closeBtn: 1,
                     yes: function (index, layero) {
@@ -76,8 +76,8 @@
                 , url: '/Home/DepartLists' //数据接口
                 , id: 'mytables'
                 , page: true //开启分页
-                , limit: 3
-                , limits: [3, 5, 10]
+                , limit: 10
+                , limits: [5, 10, 20]
                 , toolbar: '#complain_toolbar'
                 , where: { DepartName: DepartName }
                 , cols: [[ //表头

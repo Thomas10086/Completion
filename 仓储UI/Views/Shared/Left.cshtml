@@ -1,6 +1,10 @@
 ﻿@{ 
     var info = this.Session["ADMIN"] as 仓储Model.Admin;
-    var RoleNum = info.RoleNum;
+    var RoleNum = "";
+    if (info!=null)
+    {
+        RoleNum = info.RoleNum;
+    }
 }
 
 @using 仓储Model

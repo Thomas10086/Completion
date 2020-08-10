@@ -25,7 +25,7 @@
                 <button id="btnReset" type="reset" class="layui-btn layui-btn-normal">重置</button>
             </div>
         </div>
-     </div>
+    </div>
 </form>
 <div id="main" style="margin:0 auto;">
     <div class="table">
@@ -38,6 +38,11 @@
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="update">编辑</button>
             <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete">删除</button>
+        </div>
+    </script>
+    <script type="text/html" id="complain_toolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-addition"></i>添加</button>
         </div>
     </script>
     <script>
@@ -62,7 +67,7 @@
                 , page: true //开启分页
                 , limit: 10
                 , limits: [5, 10, 15, 20, 30, 50]
-                , toolbar: true
+                , toolbar: '#complain_toolbar'
                 , cols: [[ //表头
                     { field: 'SnNum', title: '序号 ', width: 120, sort: true, fixed: 'left' }
                     , { field: 'BarCode', title: '编号', width: 150 }
