@@ -657,6 +657,8 @@
     <Content Include="Areas\InStorage\Views\Product\AddBI_Products.cshtml" />
     <Content Include="Areas\InStorage\Views\Product\BI_Products.cshtml" />
     <Content Include="Areas\InStorage\Views\Product\WJ_StockIns.cshtml" />
+    <Content Include="Areas\Report\Views\Report\InStorageReport.cshtml" />
+    <Content Include="Areas\Report\Views\Report\StockInDetails.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\Res\Add.cshtml" />

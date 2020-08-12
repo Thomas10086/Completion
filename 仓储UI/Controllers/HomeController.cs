@@ -49,7 +49,7 @@ namespace 仓储UI.Controllers
                        };
             if (!String.IsNullOrEmpty(UserName))
             {
-                list = list.Where(x => x.UserName.Contains(UserName));
+                list = list.Where(x => x.UserName.Contains(UserName)||x.UserCode.Contains(UserName));
             }
             if (!String.IsNullOrEmpty(UserCode)) {
                 list = list.Where(x => x.UserCode.Contains(UserCode));

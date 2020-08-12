@@ -1,0 +1,89 @@
+﻿
+@using 仓储Model
+@model WJ_StockIn
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+<style>
+    .box {
+        width: 730px;
+        margin-left: 5px;
+        margin-top: 5px;
+    }
+
+        .box li {
+            list-style: none;
+            float: left;
+            margin-left: -1px;
+            margin-top: -1px;
+            border: 1px solid #000000;
+            line-height: 30px;
+        }
+</style>
+
+<ul class="box">
+    <li style="width:80px;height:30px;font-size: 12px;font-weight:600">入库单号</li>
+    <li style=" font-size: 12px;width:160px;height:30px;margin-left:-0.7px;" id="rkdh">@Model.StoINum</li>
+    <li style="width:80px;height:30px;font-size: 12px; font-weight:600">类型</li>
+    <li style="font-size: 12px; width:160px;height:30px; margin-left:-0.8px;">@Model.WJ_StockInType.StoITypeName</li>
+    <li style="width:80px;height:30px; font-size: 12px;font-weight:600">状态</li>
+    <li style="font-size: 12px;width:160px;height:30px;">@Model.WJ_StockStatus.SSName</li>
+</ul>
+<ul class="box">
+    <li style="margin-top: -0.8px;font-size: 12px; width:80px;height:30px; font-weight:600">供应商编号</li>
+    <li style="margin-top: -0.8px; font-size: 12px; width:160px;height:30px;margin-left:-0.7px;">@Model.SupNum</li>
+    <li style="margin-top: -0.8px;font-size: 12px; width:80px;height:30px;font-weight:600">供应商名称</li>
+    <li style="margin-top: -0.8px; font-size: 12px;width:160px;height:30px;margin-left:-0.8px;">@Model.BI_Supplier.SupName</li>
+    <li style="margin-top: -0.8px;font-size: 12px; width:80px;height:30px;font-weight:600">联系人</li>
+    <li style="margin-top: -0.8px; font-size: 12px;width:160px;height:30px;">@Model.ContactName</li>
+</ul>
+<ul class="box">
+    <li style="width:80px;height:30px;font-weight:600;font-size: 12px;">关联订单号</li>
+    <li style=" font-size: 12px; width:160px;height:30px;margin-left:-0.7px;">@Model.OrderNum</li>
+    <li style="width:80px;height:30px;font-weight:600;font-size: 12px;">创建人</li>
+    <li style=" font-size: 12px; width:160px;height:30px;margin-left:-0.8px;">@Model.Admin.UserName</li>
+    <li style="width:80px;height:30px;font-weight:600;font-size: 12px;">创建时间</li>
+    <li style=" font-size: 12px; width:160px;height:30px;">@Model.CreateTime</li>
+</ul>
+<ul class="box">
+    <li style="margin-top: -0.8px; width:80px; height: 30px; font-weight: 600; font-size: 12px;">电话</li>
+    <li style="margin-top: -0.8px; font-size: 12px; width: 160px; height: 30px; margin-left: -0.7px;">@Model.Phone</li>
+    <li style=" margin-top: -0.8px;width:80px;height:30px;font-weight:600;font-size: 12px;">备注</li>
+    <li style="margin-top: -0.8px; width:402px;font-size: 12px;height:30px;font-size: 12px; margin-left:-0.8px;">@Model.Remark</li>
+</ul>
+<ul class="box">
+    <li style="width:80px;height:30px;font-weight:600;font-size: 12px;">审核备注</li>
+    <li style="width:644px;font-size: 12px; height:30px;margin-left:-0.8px"></li>
+</ul>
+<table id="mytable" lay-filter="mytable" lay-data="{id: 'mytable'}" style="height:500px;width:300px;"></table>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Content/layui/layui.all.js"></script>
+
+
+<script>
+    $(function () {
+        jz();
+    });
+
+    function jz() {
+        var table = layui.table;
+        var id = $("#rkdh").text();
+        //输出一个表格
+        table.render({
+            elem: '#mytable',
+            id: 'mytable',
+            url: "/api/ReportAPI/StockInDetails/" + id,
+            totalRow: true
+            ,cols: [[
+                { field: 'ProductName', title: '产品名称' }
+                , { field: 'BarCode', title: '产品条码' }
+                , { field: 'Size', title: '规格' }
+                , { field: 'ProductLot', title: '批次' }
+                , { field: 'Price', title: '单价', totalRowText: '合计：'}
+                , { field: 'Num', title: '入库数', totalRow: true}
+                , { field: 'PriceCount', title: '总价', totalRow: true }
+            ]],
+            end: function () {
+                table.reload('mytable');
+            }
+        });//render
+    }
+</script>

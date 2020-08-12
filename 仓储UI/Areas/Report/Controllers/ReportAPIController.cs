@@ -13,7 +13,7 @@ namespace 仓储UI.Areas.Report.Controllers
     {
         Completion db = new Completion();
         [HttpGet]
-        public IHttpActionResult ReportList(int page, int limit, string LocalName, int LocalTypeID, string ProductName)
+        public IHttpActionResult ReportList(int page, int limit, string LocalName="", int LocalTypeID=0, string ProductName="")
         {
             var list = from x in db.BI_LocalProduct
                        select new
@@ -114,6 +114,64 @@ namespace 仓储UI.Areas.Report.Controllers
             });
 
             return Json(new { code = 0, msg = "联系管理员吧", count = total, data = ProductList });
+        }
+        [HttpGet]
+        public IHttpActionResult StockInList(int page, int limit,string day)
+        {
+            var list = from x in db.WJ_StockIn.ToList()
+                       select new
+                       {
+                           x.StoINum,
+                           x.CreateTime,
+                           SupName=x.BI_Supplier.SupName,
+                           Num = (from s in db.WJ_StockInDetails
+                                  where (s.StoINum == x.StoINum)
+                                  select s.Num).Sum(),
+                           priceCount= (from s in db.WJ_StockInDetails
+                                        where (s.StoINum == x.StoINum)
+                                        select s.Num*s.BI_Product.InPrice).Sum()
+                       };
+            if (day.Equals("10"))
+            {
+                list=list.Where(x=> x.CreateTime > DateTime.Now.Date.AddDays(-10));
+            }
+            if (day.Equals("30"))
+            {
+                list = list.Where(x => x.CreateTime > DateTime.Now.Date.AddDays(-30));
+            }
+            if (day.Equals("60"))
+            {
+                list = list.Where(x => x.CreateTime > DateTime.Now.Date.AddDays(-60));
+            }
+            var total = list.Count();
+            var StockInLis = list.ToList().Skip((page - 1) * limit).Take(limit).Select(x => new
+            {
+                x.StoINum,
+                CreateTime= x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                x.SupName,
+                x.Num,
+                x.priceCount
+            });
+            return Json(new { code = 0, msg = "联系管理员吧", count = total, data = StockInLis });
+        }
+
+        [HttpGet]
+        public IHttpActionResult StockInDetails(string id)
+        {
+            var list = from x in db.WJ_StockInDetails
+                       where x.StoINum == id
+                       select new
+                       {
+                           ProductName=x.BI_Product.ProductName
+                           ,x.BarCode
+                           ,Size=x.BI_Product.Size
+                           ,x.ProductLot
+                           ,Price=x.BI_Product.InPrice
+                           ,x.Num
+                           ,PriceCount= (x.BI_Product.InPrice*x.Num)
+                       };
+            var total = list.ToList().Count();
+            return Json(new { code = 0, msg = "联系管理员吧", count = total, data = list });
         }
     }
 }

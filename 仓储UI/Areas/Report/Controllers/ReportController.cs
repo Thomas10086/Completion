@@ -24,6 +24,16 @@ namespace 仓储UI.Areas.Report.Controllers
             return View();
         }
         /// <summary>
+        /// 查看入库详情
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult StockInDetails(string id)
+        {
+            var Stock = db.WJ_StockIn.Find(id);
+            return PartialView(Stock);
+        }
+        /// <summary>
         /// 货品统计
         /// </summary>
         /// <returns></returns>
